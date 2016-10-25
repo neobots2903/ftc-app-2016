@@ -1,4 +1,6 @@
-package org.firstinspires.ftc.teamcode; /**
+package org.firstinspires.ftc.teamcode;
+
+/**
  * Created by NeoBOTS on 10/17/2016.
  */
 
@@ -10,32 +12,26 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Hardware;
 
 public class drive9330 {
 
+    Hardware9330 robot9330 = null;
+
+    public drive9330(Hardware9330 robot9330) {
+        this.robot9330 = robot9330;
+    }
+
     public void init() {
-        DcMotor motorFL;
-        DcMotor motorFR;
-        DcMotor motorBL;
-        DcMotor motorBR;
-
-        double leftY1 = gamepad1.left_stick_y;
-        double leftX1 = gamepad1.left_stick_x;
-        double rightX1 = gamepad1.right_stick_x;
-
     }
 
     public void init_loop() {
 
-        motorFL = hardwareMap.dcMotor.get("motorFL");
-        motorFR = hardwareMap.dcMotor.get("motorFR");
-        motorBL = hardwareMap.dcMotor.get("motorBL");
-        motorBR = hardwareMap.dcMotor.get("motorBR");
 
-        motorFL.setPower(-leftY1 - leftX1 - rightX1);
-        motorFR.setPower(leftY1 - leftX1 - rightX1);
-        motorBR.setPower(leftY1 + leftX1 - rightX1);
-        motorBL.setPower(-leftY1 + leftX1 - rightX1);
+        robot9330.leftFrontMotor.setPower(-leftY1 - leftX1 - rightX1);
+        robot9330.rightFrontMotor.setPower(leftY1 - leftX1 - rightX1);
+        robot9330.rightRearMotor.setPower(leftY1 + leftX1 - rightX1);
+        robot9330.leftRearMotor.setPower(-leftY1 + leftX1 - rightX1);
     }
 
     public void start() {

@@ -55,11 +55,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Disabled
 public class TemplateOpMode_Iterative extends OpMode
 {
+    Hardware9330 robot9330 = new Hardware9330();
+
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-
-    // private DcMotor leftMotor = null;
-    // private DcMotor rightMotor = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -72,14 +71,9 @@ public class TemplateOpMode_Iterative extends OpMode
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
-        // leftMotor  = hardwareMap.dcMotor.get("left_drive");
-        // rightMotor = hardwareMap.dcMotor.get("right_drive");
+        robot9330.init(hardwareMap);
 
-        // eg: Set the drive motor directions:
-        // Reverse the motor that runs backwards when connected directly to the battery
-        // leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        //  rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        // telemetry.addData("Status", "Initialized");
+        telemetry.addData("Status", "Initialized");
     }
 
     /*
@@ -104,6 +98,15 @@ public class TemplateOpMode_Iterative extends OpMode
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
 
+        double c1lx = gamepad1.left_stick_x;
+        double c1ly = gamepad1.left_stick_y;
+        double c1rx = gamepad1.right_stick_x;
+
+        robot9330.leftFrontMotor.setPower(-c1ly - c1lx - c1rx);
+        robot9330.rightFrontMotor.setPower(c1ly - c1lx - c1rx);
+        robot9330.rightRearMotor.setPower(c1ly + c1lx - c1rx);
+        robot9330.leftRearMotor.setPower(-c1ly + c1lx - c1rx);
+
         // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
         // leftMotor.setPower(-gamepad1.left_stick_y);
         // rightMotor.setPower(-gamepad1.right_stick_y);
@@ -114,6 +117,10 @@ public class TemplateOpMode_Iterative extends OpMode
      */
     @Override
     public void stop() {
+        robot9330.leftFrontMotor.setPower(0);
+        robot9330.rightFrontMotor.setPower(0);
+        robot9330.rightRearMotor.setPower(0);
+        robot9330.leftRearMotor.setPower(0);
     }
 
 }
