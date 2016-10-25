@@ -98,14 +98,24 @@ public class TemplateOpMode_Iterative extends OpMode
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
 
-        double c1lx = gamepad1.left_stick_x;
-        double c1ly = gamepad1.left_stick_y;
-        double c1rx = gamepad1.right_stick_x;
+        // omniwheel X drive:
+        //        X FRONT X
+        //      X           X
+        //    X  P1       P2  X
+        //            X
+        //           XXX
+        //            X
+        //    X  P4       P3  X
+        //      X           X
+        //        X       X
+        double xPower = gamepad1.left_stick_x;
+        double yPower = gamepad1.left_stick_y;
+        double spinPower = gamepad1.right_stick_x;
 
-        robot9330.leftFrontMotor.setPower(-c1ly - c1lx - c1rx);
-        robot9330.rightFrontMotor.setPower(c1ly - c1lx - c1rx);
-        robot9330.rightRearMotor.setPower(c1ly + c1lx - c1rx);
-        robot9330.leftRearMotor.setPower(-c1ly + c1lx - c1rx);
+        robot9330.leftFrontMotor.setPower(-yPower - xPower - spinPower);
+        robot9330.rightFrontMotor.setPower(yPower - xPower - spinPower);
+        robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
+        robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
 
         // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
         // leftMotor.setPower(-gamepad1.left_stick_y);

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,6 +17,7 @@ public class Hardware9330 {
     public DcMotor leftRearMotor   = null;
     public DcMotor  rightRearMotor  = null;
 
+    public GyroSensor gyro = null;
     public Servo  brake    = null;
     public Servo beBoop    = null;
 
@@ -36,6 +38,8 @@ public class Hardware9330 {
         rightFrontMotor  = hwMap.dcMotor.get("right_front_drive");
         leftRearMotor   = hwMap.dcMotor.get("left_rear_drive");
         rightRearMotor  = hwMap.dcMotor.get("right_rear_drive");
+
+        gyro = hwMap.gyroSensor.get("gyro");
 
 //        armMotor    = hwMap.dcMotor.get("left_arm");
 //        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors

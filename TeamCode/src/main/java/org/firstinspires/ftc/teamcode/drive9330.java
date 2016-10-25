@@ -2,6 +2,19 @@ package org.firstinspires.ftc.teamcode;
 
 /**
  * Created by NeoBOTS on 10/17/2016.
+ *
+ * This needs to contain the methods for use by autonomous mode or
+ * any automatic functions that the drive team requests, i.e., press button 'A'
+ * and the robot spins 90 degrees and shoots the ball.
+ *
+ * Some possible methods
+ * public void init(Hardware9330 robot9330)
+ * public void turn(float degrees)
+ * public void forward(float speed)
+ * public void stop()
+ *
+ * etc.
+ *
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -26,12 +39,6 @@ public class drive9330 {
     }
 
     public void init_loop() {
-
-
-        robot9330.leftFrontMotor.setPower(-leftY1 - leftX1 - rightX1);
-        robot9330.rightFrontMotor.setPower(leftY1 - leftX1 - rightX1);
-        robot9330.rightRearMotor.setPower(leftY1 + leftX1 - rightX1);
-        robot9330.leftRearMotor.setPower(-leftY1 + leftX1 - rightX1);
     }
 
     public void start() {
