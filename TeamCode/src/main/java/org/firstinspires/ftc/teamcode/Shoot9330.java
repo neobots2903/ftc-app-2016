@@ -9,7 +9,7 @@ package org.firstinspires.ftc.teamcode;
  */
 
 //The shot class
-public class Shoot9330 extends LinearOpMode {
+public class Shoot9330 {
 
     //Predefine motor shotMotor, the motor used for shooting.
     DcMotor shotMotor;
