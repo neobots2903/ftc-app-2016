@@ -17,6 +17,8 @@ public class Hardware9330 {
     public DcMotor leftRearMotor   = null;
     public DcMotor  rightRearMotor  = null;
 
+    public DcMotor shotMotor = null;
+
     public GyroSensor gyro = null;
     public Servo  brake    = null;
     public Servo beBoop    = null;
