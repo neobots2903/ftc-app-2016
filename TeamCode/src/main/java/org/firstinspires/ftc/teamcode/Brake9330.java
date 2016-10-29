@@ -11,11 +11,10 @@ public class Brake9330  {
        It will be rotated into a position similar to a kick stand to keep in place.
     */
 
-    boolean isEnabled = false;
-   // Servo servo;
-    //servo = hardwareMap.servo.get("BrakeServo");
-   //public BrakeEnable() {
 
-    //}
+    static final Double MIN_POS = 0.0;
+    static final Double MAX_POS = 1.0;
+    private Hardware9330 hwMap = null;
+   }
 
-}
+

@@ -5,4 +5,9 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class BBoop9330 {
+
+    public BBoop9330() {
+
+    }
+
 }
