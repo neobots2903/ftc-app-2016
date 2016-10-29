@@ -37,12 +37,12 @@ public class Hardware9330 {
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftFrontMotor   = hwMap.dcMotor.get("left_front_drive");
-        rightFrontMotor  = hwMap.dcMotor.get("right_front_drive");
-        leftRearMotor   = hwMap.dcMotor.get("left_rear_drive");
-        rightRearMotor  = hwMap.dcMotor.get("right_rear_drive");
+        leftFrontMotor   = hwMap.dcMotor.get("motorFL");
+        rightFrontMotor  = hwMap.dcMotor.get("motorFR");
+        leftRearMotor   = hwMap.dcMotor.get("motorBL");
+        rightRearMotor  = hwMap.dcMotor.get("motorBR");
 
-        gyro = hwMap.gyroSensor.get("gyro");
+      //  gyro = hwMap.gyroSensor.get("gyro");
 
 //        armMotor    = hwMap.dcMotor.get("left_arm");
 //        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors

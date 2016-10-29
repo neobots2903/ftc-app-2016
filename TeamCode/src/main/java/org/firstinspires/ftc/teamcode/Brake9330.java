@@ -17,21 +17,21 @@ private boolean brakeEngaged;
     static final Double ENGAGED_POS = 1.0;
 //   accessing Hardware9330
     private Hardware9330 hwMap = null;
-
+//Constructor for brake class
     public Brake9330 (Hardware9330 robotMap){
 
         hwMap = robotMap;
         hwMap.brake.setPosition(RELEASE_POS);
         brakeEngaged = false;
     }
-
+ //  Engaging the brake
     public void EngageBrake(){
         if(!brakeEngaged){
             brakeEngaged = true;
             hwMap.brake.setPosition(ENGAGED_POS);
         }
     }
-
+// Releasing the brake
     public void releaseBrake(){
         if(brakeEngaged){
             brakeEngaged = false;

@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name="TeleOp9330", group="Opmode")  // @Autonomous(...) is the other common choice
-@Disabled
+//@Disabled
 public class TeleOp9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
