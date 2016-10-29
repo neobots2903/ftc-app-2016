@@ -57,6 +57,10 @@ public class TeleOp9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
 
+    final static double BBOOP_INCREMENT = 0.01;
+    static final double BBMAX_POS     =  1.0;     // Maximum rotational position
+    static final double BBMIN_POS     =  0.0;     // Minimum rotational position
+
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -117,6 +121,13 @@ public class TeleOp9330 extends OpMode
         robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
         robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
 
+        double currentPos = robot9330.beBoop.getPosition();
+        if(gamepad2.x  && currentPos < BBMAX_POS){
+            robot9330.beBoop.setPosition(currentPos + BBOOP_INCREMENT);
+        }
+        else if (gamepad2.y && currentPos > BBMIN_POS){
+            robot9330.beBoop.setPosition((currentPos - BBOOP_INCREMENT));
+        }
         // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
         // leftMotor.setPower(-gamepad1.left_stick_y);
         // rightMotor.setPower(-gamepad1.right_stick_y);
