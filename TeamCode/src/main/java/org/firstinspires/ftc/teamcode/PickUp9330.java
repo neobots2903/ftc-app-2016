@@ -1,43 +1,42 @@
 package org.firstinspires.ftc.teamcode;
+    import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
     import com.qualcomm.robotcore.hardware.DcMotor;
     import com.qualcomm.robotcore.eventloop.opmode.OpMode;
     import static java.lang.Thread.sleep;
 
 /**
- * Created by robot on 10/17/2016.
+ * Created by Jakob on 10/17/2016.
  */
 
 //PickUp class
-public class PickUp9330 {
+
+public class PickUp9330{
 
     //grab hardware map
     private Hardware9330 hwMap = null;
 
-    //code to include motor goes here
-    DcMotor pickUpMotor;
-    boolean pickUpButton = gamepad2.button.x; //gamepad button code;
-    boolean pickUpEjectButton = gamepad2.button.y; //gamepad button code;
+    //code to include buttons
+    private boolean pickUpButton /* = gamepad2.button.x */;
+    private boolean pickUpEjectButton /* = gamepad2.button.y */;
 
-    //Empty constructor
+    //grab pickUpMotor from hwMap
     public PickUp9330(Hardware9330 robotMap) {
-        //Set the motor
-//        pickUpMotor = Hardware9330.dcMotor.get("pickUpMotor");
-        //Set the direction of the pickup motor
         hwMap = robotMap;
+        //Set the direction of the pickup motor
         hwMap.pickUpMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 
     public void pickUp() {
-        if (pickUpButton == true) {
-            pickUpMotor.setPower(1);
+        if (pickUpButton) {
+            hwMap.pickUpMotor.setPower(1);
         } else {
-            pickUpMotor.setPower(0);
+            hwMap.pickUpMotor.setPower(0);
         }
     }
 
     public void pickUpEject() {
-        if (pickUpEjectButton == true) {
-            pickUpMotor.setPower(-1);
+        if (pickUpEjectButton) {
+            hwMap.pickUpMotor.setPower(-1);
         }
     }
 
