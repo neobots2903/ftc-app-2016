@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode;
     import static java.lang.Thread.sleep;
 
 /**
- * Created by Jakob on 10/17/2016.
+ * Created by Jakob and Conner on 10/17/2016.
  */
 
 //PickUp class

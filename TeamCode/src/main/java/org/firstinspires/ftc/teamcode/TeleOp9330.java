@@ -122,6 +122,7 @@ public class TeleOp9330 extends OpMode
         robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
 
         double currentPos = robot9330.beBoop.getPosition();
+        telemetry.addData("Status", "currentpos: " + currentPos);
         if(gamepad2.x  && currentPos < BBMAX_POS){
             robot9330.beBoop.setPosition(currentPos + BBOOP_INCREMENT);
         }
