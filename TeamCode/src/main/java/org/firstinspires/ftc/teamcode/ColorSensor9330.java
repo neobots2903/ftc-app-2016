@@ -13,7 +13,7 @@ public class ColorSensor9330 {
 
     public ColorSensor9330(Hardware9330 robotMap) {
         hwMap = robotMap;
-        csensor = hwMap.colorSensor.get("sensor_color");
+        csensor = hwMap.CSensor;
         csensor.enableLed(bLedOn);
     }
 
