@@ -8,25 +8,24 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public class ColorSensor9330 {
 
     ColorSensor csensor;
+    private Hardware9330 hwMap = null;
+    boolean bLedOn = true;
 
-    public ColorSensor9330() {
-
-        csensor = hardwareMap.colorSensor.get("sensor_color");
+    public ColorSensor9330(Hardware9330 robotMap) {
+        hwMap = robotMap;
+        csensor = hwMap.colorSensor.get("sensor_color");
         csensor.enableLed(bLedOn);
     }
 
     public float r() {
-        waitForStart();
         return csensor.red();
     }
 
     public float g() {
-        waitForStart();
         return csensor.green();
     }
 
     public float b() {
-        waitforStart();
         return csensor.blue();
     }
 
