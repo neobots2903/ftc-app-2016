@@ -15,10 +15,6 @@ public class PickUp9330{
     //grab hardware map
     private Hardware9330 hwMap = null;
 
-    //code to include buttons
-    private boolean pickUpButton /* = gamepad2.button.x */;
-    private boolean pickUpEjectButton /* = gamepad2.button.y */;
-
     //grab pickUpMotor from hwMap
     public PickUp9330(Hardware9330 robotMap) {
         hwMap = robotMap;
@@ -27,16 +23,20 @@ public class PickUp9330{
     }
 
     public void pickUp() {
-        if (pickUpButton) {
+        if (hwMap != null) {
             hwMap.pickUpMotor.setPower(1);
-        } else {
-            hwMap.pickUpMotor.setPower(0);
         }
     }
 
     public void pickUpEject() {
-        if (pickUpEjectButton) {
+        if (hwMap != null) {
             hwMap.pickUpMotor.setPower(-1);
+        }
+    }
+
+    public void stopPickUp() {
+        if (hwMap != null) {
+            hwMap.pickUpMotor.setPower(0);
         }
     }
 
