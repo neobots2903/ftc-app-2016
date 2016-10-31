@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * Created by John on 10/18/2016.
@@ -24,6 +25,8 @@ public class Hardware9330 {
     public Servo  brake    = null;
     public Servo beBoop    = null;
 
+    public ColorSensor CSensor = null;
+
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -42,7 +45,9 @@ public class Hardware9330 {
         leftRearMotor   = hwMap.dcMotor.get("motorBL");
         rightRearMotor  = hwMap.dcMotor.get("motorBR");
         beBoop = hwMap.servo.get("beBoop");
-      //  gyro = hwMap.gyroSensor.get("gyro");
+        CSensor = hwMap.colorSensor.get("BBCSensor");
+
+        //  gyro = hwMap.gyroSensor.get("gyro");
 
 //        armMotor    = hwMap.dcMotor.get("left_arm");
 //        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
