@@ -45,7 +45,7 @@ public class Hardware9330 {
         leftRearMotor   = hwMap.dcMotor.get("motorBL");
         rightRearMotor  = hwMap.dcMotor.get("motorBR");
         beBoop = hwMap.servo.get("beBoop");
-        CSensor = hwMap.colorSensor.get("BBSensor");
+        CSensor = hwMap.colorSensor.get("CSensor");
 
         //  gyro = hwMap.gyroSensor.get("gyro");
 
