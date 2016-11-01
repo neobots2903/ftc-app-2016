@@ -121,6 +121,7 @@ public class TeleOp9330 extends OpMode
         robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
         robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
 
+        //robot9330.beBoop.
         double currentPos = robot9330.beBoop.getPosition();
         telemetry.addData("Status", "currentpos: " + currentPos);
         if(gamepad2.x  && currentPos < BBMAX_POS){
@@ -128,6 +129,16 @@ public class TeleOp9330 extends OpMode
         }
         else if (gamepad2.y && currentPos > BBMIN_POS){
             robot9330.beBoop.setPosition((currentPos - BBOOP_INCREMENT));
+        }
+
+        if(gamepad2.right_bumper){
+            robot9330.pickUpMotor.setPower(1);
+        }
+        else if(gamepad2.left_bumper){
+            robot9330.pickUpMotor.setPower(-1);
+        }
+        else{
+            robot9330.pickUpMotor.setPower(0);
         }
         // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
         // leftMotor.setPower(-gamepad1.left_stick_y);
