@@ -28,7 +28,7 @@ public class VuforiaTest extends LinearOpMode {
     OpenGLMatrix lastKnownLocation;
     OpenGLMatrix phoneLocation;
 
-    public static final String VUFORIA_KEY = "GET A KEY"; //Key used for Vuforia.
+    public static final String VUFORIA_KEY = "AXy0R0L/////AAAAGXWlr/IJ2ULonETJ61ClYwcBj/SD/g/+HNxNEq8dvMxSLlf9OFayNcnpgI88Ihlbsj7crtrC0wgZTgE1rH0xZ0f2jZrJTorjL3H4g2iAyDd3qEfV/ATtH7msbdYlJN5WOBpJ3O1/rN/9iU6KmUeO18FUQuvDQB/RffhPR0Y6gFOvDj3D/gOLuaVnCO6RSzdj8EfYSaitxcFJA9YNIW8J1skkQA0X1Z7sq7zU4TogNjt50YtnKCVzsLBPLbuoilH5pUcgwZM6zWRidjZORvlZeIyRwba3u31xsC6ai33vWFlMgKotkIHVUBEq6PHIHaaL7GNLWWmP+S/27Jb2uHiNK4mfOxyuAlWnIv9PKdEKPzVL"; //Key used for Vuforia.
 
     public void runOpMode() throws InterruptedException
     {
