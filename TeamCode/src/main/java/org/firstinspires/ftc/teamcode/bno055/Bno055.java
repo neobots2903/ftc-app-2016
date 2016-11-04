@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.bno055;
  * Created by Olavi Kamppari on 11/5/2015.
  * 
  * Added to Github on 11/16/2015 (https://github.com/OliviliK/FTC_Library/edit/master/Bno055.java)
+ * Reference "http://olliesworkshops.blogspot.com/2015/11/bno055-imu-sensor-with-ftc-wire-library.html" to see how to use
  */
 
 import android.util.Log;
