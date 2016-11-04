@@ -2,15 +2,13 @@ package org.firstinspires.ftc.teamcode;
     import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
     import com.qualcomm.robotcore.hardware.DcMotor;
     import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-    import static java.lang.Thread.sleep;
 
 /**
  * Created by Jakob and Conner on 10/17/2016.
  */
 
 //PickUp class
-
-public class PickUp9330{
+public class PickUp9330 {
 
     //grab hardware map
     private Hardware9330 hwMap = null;
@@ -59,6 +57,8 @@ public class PickUp9330{
      pickUpMotor.setPower(-1);
      }
      }
+
+     //If you are reading this WHY because this code
 
      public void pickup() throws InterruptedException {
      if (pickUpButton == true) {
