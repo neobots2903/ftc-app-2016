@@ -145,6 +145,13 @@ public class TeleOp9330 extends OpMode
         else{
             robot9330.pickUpMotor.setPower(0);
         }
+
+        if(gamepad2.a){
+            robot9330.shotMotor.setPower(1);
+        }
+        else{
+            robot9330.shotMotor.setPower(0);
+        }
         // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
         // leftMotor.setPower(-gamepad1.left_stick_y);
         // rightMotor.setPower(-gamepad1.right_stick_y);
