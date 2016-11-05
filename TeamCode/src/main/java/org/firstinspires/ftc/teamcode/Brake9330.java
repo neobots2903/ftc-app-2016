@@ -14,7 +14,7 @@ private boolean brakeEngaged;
 
 //   Declaring Set positions for servo
     static final Double RELEASE_POS = 0.8;
-    static final Double ENGAGED_POS = 0.2;
+    static final Double ENGAGED_POS = 0.25;
 //   accessing Hardware9330
     private Hardware9330 hwMap = null;
 //Constructor for brake class
