@@ -41,6 +41,12 @@ public class ConceptBNO055Burnham extends OpMode {
         dlSensor.addField("AccX");
         dlSensor.addField("AccY");
         dlSensor.addField("AccZ");
+        dlSensor.addField("MagX");
+        dlSensor.addField("MagY");
+        dlSensor.addField("MagZ");
+        dlSensor.addField("GyrX");
+        dlSensor.addField("GyrY");
+        dlSensor.addField("GyrZ");
         dlSensor.newLine();
 
         dlFusion       = new DataLogger("bno Fusion");
@@ -116,6 +122,12 @@ public class ConceptBNO055Burnham extends OpMode {
                 dlSensor.addField(bno.accX());
                 dlSensor.addField(bno.accY());
                 dlSensor.addField(bno.accZ());
+                dlSensor.addField(bno.magX());
+                dlSensor.addField(bno.magY());
+                dlSensor.addField(bno.magZ());
+                dlSensor.addField(bno.gyrX());
+                dlSensor.addField(bno.gyrY());
+                dlSensor.addField(bno.gyrZ());
                 dlSensor.newLine();
             }
             if (fusionData.isChanged()) {
