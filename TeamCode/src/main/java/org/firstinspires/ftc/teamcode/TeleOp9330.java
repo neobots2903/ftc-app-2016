@@ -32,7 +32,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -57,6 +56,7 @@ public class TeleOp9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
 
+    static final int    CYCLE_MS    =   75;     // period of each cycle
     final static double BBOOP_INCREMENT = 0.01;
     static final double BBMAX_POS     =  1.0;     // Maximum rotational position
     static final double BBMIN_POS     =  0.0;     // Minimum rotational position
@@ -64,6 +64,13 @@ public class TeleOp9330 extends OpMode
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
 
+    // beBoop position
+    double currentPos;
+    boolean rampUp = true;
+
+    Brake9330 brake = null;
+    private long lastBrakeChange;
+    private boolean buttonBReleased = true;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -78,6 +85,15 @@ public class TeleOp9330 extends OpMode
         robot9330.init(hardwareMap);
 
         telemetry.addData("Status", "Initialized");
+
+        currentPos = 0.5;
+        robot9330.beBoop.scaleRange(0, 1);
+        robot9330.beBoop.setPosition(.5);
+
+        brake = new Brake9330(robot9330);
+        brake.releaseBrake();
+        lastBrakeChange = System.currentTimeMillis();
+
     }
 
     /*
@@ -94,6 +110,7 @@ public class TeleOp9330 extends OpMode
     public void start() {
         runtime.reset();
     }
+
 
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
@@ -112,20 +129,43 @@ public class TeleOp9330 extends OpMode
         //    X  P4       P3  X
         //      X           X
         //        X       X
-        double xPower = gamepad1.left_stick_x;
-        double yPower = gamepad1.left_stick_y;
-        double spinPower = gamepad1.right_stick_x;
+        double xPower =  0;//gamepad1.left_stick_x;
+        double yPower = 0;//gamepad1.left_stick_y;
+        double spinPower = 0;//gamepad1.right_stick_x;
 
         robot9330.leftFrontMotor.setPower(-yPower - xPower - spinPower);
         robot9330.rightFrontMotor.setPower(yPower - xPower - spinPower);
         robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
         robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
 
-        //robot9330.beBoop.
-        robot9330.beBoop.scaleRange(0, 1);
-        robot9330.beBoop.setPosition(.5);
+//        //robot9330.beBoop.
+//
+//        if (rampUp) {
+//            // Keep stepping up until we hit the max value.
+//            currentPos += BBOOP_INCREMENT ;
+//            if (currentPos >= BBMAX_POS ) {
+//                currentPos = BBMAX_POS;
+//                rampUp = !rampUp;   // Switch ramp direction
+//            }
+//        }
+//        else {
+//            // Keep stepping down until we hit the min value.
+//            currentPos -= BBOOP_INCREMENT;
+//            if (currentPos <= BBMIN_POS ) {
+//                currentPos = BBMIN_POS;
+//                rampUp = !rampUp;  // Switch ramp direction
+//            }
+//        }
+//        // Set the servo to the new position and pause;
+//        robot9330.beBoop.setPosition(currentPos);
+/*        try {
+            sleep(CYCLE_MS);
+            yield();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+*/
 
-        double currentPos = .5;
         telemetry.addData("Status", "currentpos: " + currentPos);
         if(gamepad2.x  && currentPos < BBMAX_POS){
             currentPos += BBOOP_INCREMENT;
@@ -136,6 +176,20 @@ public class TeleOp9330 extends OpMode
             robot9330.beBoop.setPosition((currentPos));
         }
 
+
+        if (gamepad1.b && buttonBReleased)
+        {
+                if (brake.isBrakeEngaged())
+                    brake.releaseBrake();
+                else
+                    brake.engageBrake();
+                buttonBReleased = false;
+        }
+        else if (!gamepad1.b)
+            buttonBReleased = true;
+
+
+ /*
         if(gamepad2.right_bumper){
             robot9330.pickUpMotor.setPower(1);
         }
@@ -155,6 +209,7 @@ public class TeleOp9330 extends OpMode
         // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
         // leftMotor.setPower(-gamepad1.left_stick_y);
         // rightMotor.setPower(-gamepad1.right_stick_y);
+*/
     }
 
     /*

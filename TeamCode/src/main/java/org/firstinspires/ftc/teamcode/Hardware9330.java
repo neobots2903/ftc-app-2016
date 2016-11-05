@@ -46,6 +46,8 @@ public class Hardware9330 {
         rightRearMotor  = hwMap.dcMotor.get("motorBR");
         pickUpMotor = hwMap.dcMotor.get("motorPickup");
         beBoop = hwMap.servo.get("beBoop");
+        brake = hwMap.servo.get("brake");
+
         //CSensor = hwMap.colorSensor.get("CSensor");
 
         //  gyro = hwMap.gyroSensor.get("gyro");
@@ -70,6 +72,8 @@ public class Hardware9330 {
 //        beBoop = hwMap.servo.get("beBoop");
 //        brake.setPosition(MID_SERVO);
 //        beBoop.setPosition(MID_SERVO);
+
+        brake.setDirection(Servo.Direction.REVERSE);
 
     }
 

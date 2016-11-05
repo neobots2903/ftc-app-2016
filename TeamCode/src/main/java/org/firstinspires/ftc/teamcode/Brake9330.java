@@ -13,8 +13,8 @@ public class Brake9330  {
 private boolean brakeEngaged;
 
 //   Declaring Set positions for servo
-    static final Double RELEASE_POS = 0.0;
-    static final Double ENGAGED_POS = 1.0;
+    static final Double RELEASE_POS = 0.8;
+    static final Double ENGAGED_POS = 0.2;
 //   accessing Hardware9330
     private Hardware9330 hwMap = null;
 //Constructor for brake class
@@ -25,7 +25,7 @@ private boolean brakeEngaged;
         brakeEngaged = false;
     }
  //  Engaging the brake
-    public void EngageBrake(){
+    public void engageBrake(){
         if(!brakeEngaged){
             brakeEngaged = true;
             hwMap.brake.setPosition(ENGAGED_POS);
@@ -37,6 +37,11 @@ private boolean brakeEngaged;
             brakeEngaged = false;
             hwMap.brake.setPosition(RELEASE_POS);
         }
+    }
+
+    // query brake state
+    public boolean isBrakeEngaged() {
+        return brakeEngaged;
     }
 
 }
