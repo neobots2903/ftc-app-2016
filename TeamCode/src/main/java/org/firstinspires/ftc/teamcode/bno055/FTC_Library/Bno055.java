@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bno055;
+package org.firstinspires.ftc.teamcode.bno055.FTC_Library;
 
 /**
  * Created by Olavi Kamppari on 11/5/2015.
