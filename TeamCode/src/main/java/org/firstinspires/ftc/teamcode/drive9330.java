@@ -32,7 +32,7 @@ public class drive9330{
 
     public void drive() {
         if(System.currentTimeMillis() < targetTime) {
-            moveForward(setTime());
+            moveForward(1.0f);
         }
         else{
             moveForward(0);
