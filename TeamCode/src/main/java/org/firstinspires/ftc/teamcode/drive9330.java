@@ -17,39 +17,49 @@ package org.firstinspires.ftc.teamcode;
  *
  */
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Hardware;
 
-public class drive9330 {
 
-    Hardware9330 robot9330 = null;
+public class drive9330{
 
-    public drive9330(Hardware9330 robot9330) {
-        this.robot9330 = robot9330;
-    }
+    Hardware9330 robot9330 = new Hardware9330();
+    long targetTime = 0;
 
-    public void init() {
-    }
+    public void init(Hardware9330 robotmap) {
 
-    public void init_loop() {
-    }
-
-    public void start() {
+        robot9330 = robotmap;
 
     }
 
-    public void loop(){
-
+    public void drive() {
+        if(System.currentTimeMillis() < targetTime) {
+            moveForward(setTime());
+        }
+        else{
+            moveForward(0);
+        }
     }
 
-    public void stop(){
+    public void moveForward(float speed){
 
+        robot9330.leftFrontMotor.setPower(-speed);
+        robot9330.rightFrontMotor.setPower(speed);
+        robot9330.rightRearMotor.setPower(speed);
+        robot9330.leftRearMotor.setPower(-speed);
+    }
+
+    public void turnTable (float speed){
+
+        robot9330.leftFrontMotor.setPower(speed);
+        robot9330.rightFrontMotor.setPower(speed);
+        robot9330.rightRearMotor.setPower(speed);
+        robot9330.leftRearMotor.setPower(speed);
+    }
+
+    public void setTime(long driveTime) {
+        targetTime = driveTime + System.currentTimeMillis();
+    }
+
+    public void reset() {
+        long targetTime = 0;
     }
  }
