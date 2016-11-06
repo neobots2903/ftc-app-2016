@@ -56,7 +56,6 @@ public class TeleOp9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
 
-    static final int    CYCLE_MS    =   75;     // period of each cycle
     final static double BBOOP_INCREMENT = 0.01;
     static final double BBMAX_POS     =  1.0;     // Maximum rotational position
     static final double BBMIN_POS     =  0.0;     // Minimum rotational position
@@ -129,43 +128,16 @@ public class TeleOp9330 extends OpMode
         //    X  P4       P3  X
         //      X           X
         //        X       X
-        double xPower =  0;//gamepad1.left_stick_x;
-        double yPower = 0;//gamepad1.left_stick_y;
-        double spinPower = 0;//gamepad1.right_stick_x;
+        double xPower = gamepad1.left_stick_x;
+        double yPower = gamepad1.left_stick_y;
+        double spinPower = gamepad1.right_stick_x;
 
         robot9330.leftFrontMotor.setPower(-yPower - xPower - spinPower);
         robot9330.rightFrontMotor.setPower(yPower - xPower - spinPower);
         robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
         robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
 
-//        //robot9330.beBoop.
-//
-//        if (rampUp) {
-//            // Keep stepping up until we hit the max value.
-//            currentPos += BBOOP_INCREMENT ;
-//            if (currentPos >= BBMAX_POS ) {
-//                currentPos = BBMAX_POS;
-//                rampUp = !rampUp;   // Switch ramp direction
-//            }
-//        }
-//        else {
-//            // Keep stepping down until we hit the min value.
-//            currentPos -= BBOOP_INCREMENT;
-//            if (currentPos <= BBMIN_POS ) {
-//                currentPos = BBMIN_POS;
-//                rampUp = !rampUp;  // Switch ramp direction
-//            }
-//        }
-//        // Set the servo to the new position and pause;
-//        robot9330.beBoop.setPosition(currentPos);
-/*        try {
-            sleep(CYCLE_MS);
-            yield();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
-
+        // beBoop handling
         telemetry.addData("Status", "currentpos: " + currentPos);
         if(gamepad2.x  && currentPos < BBMAX_POS){
             currentPos += BBOOP_INCREMENT;
@@ -176,20 +148,19 @@ public class TeleOp9330 extends OpMode
             robot9330.beBoop.setPosition((currentPos));
         }
 
-
-        if (gamepad1.b && buttonBReleased)
-        {
+        // brake handling
+        if (gamepad1.b && buttonBReleased) {
                 if (brake.isBrakeEngaged())
                     brake.releaseBrake();
                 else
                     brake.engageBrake();
                 buttonBReleased = false;
         }
-        else if (!gamepad1.b)
+        else if (!gamepad1.b) {
             buttonBReleased = true;
+        }
 
-
- /*
+        // pickup motor handling
         if(gamepad2.right_bumper){
             robot9330.pickUpMotor.setPower(1);
         }
@@ -200,16 +171,13 @@ public class TeleOp9330 extends OpMode
             robot9330.pickUpMotor.setPower(0);
         }
 
+        // shot motor handling
         if(gamepad2.a){
             robot9330.shotMotor.setPower(1);
         }
         else{
             robot9330.shotMotor.setPower(0);
         }
-        // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-        // leftMotor.setPower(-gamepad1.left_stick_y);
-        // rightMotor.setPower(-gamepad1.right_stick_y);
-*/
     }
 
     /*
