@@ -40,4 +40,12 @@ public class Auto9330 extends OpMode {
         robot9330.rightRearMotor.setPower(0);
         robot9330.leftRearMotor.setPower(0);
     }
+
+    //we tried :(
+    public void driveForwardOneSecond() {
+        setTime(long 1000);
+        drive();
+    }
+
+
 }
