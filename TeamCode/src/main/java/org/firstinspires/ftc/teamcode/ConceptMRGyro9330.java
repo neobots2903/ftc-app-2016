@@ -24,7 +24,7 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   50;     // period of each cycle
-    static final double MAX_POS     =  1.0;     // Maximum rotational position
+    static final double MAX_POS     =  360;     // Maximum rotational position
     static final double MIN_POS     =  0.0;     // Minimum rotational position
 
     // Define class members
@@ -64,10 +64,10 @@ public class ConceptMRGyro9330 extends LinearOpMode {
         gyroPID = new PID9330(conservativeKP, conservativeKI, conservativeKD, PID9330.TUNING_DIRECTION.DIRECT);
 
         // set initial currentGyroPos and motorPower values
-        gyroPID.setInput(currentGyroPos 0);
+        gyroPID.setInput(currentGyroPos);
 
         // set target value (targetGyroPos)
-        gyroPID.setSetpoint(targetGyroPos 90);
+        gyroPID.setSetpoint(targetGyroPos);
 
         // set minimum and maximum motorPower -- for example power to motors
         gyroPID.setOutputLimits(-100, 100);
@@ -82,7 +82,7 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
         // Scan turn 90 till stop pressed.
         while(opModeIsActive()) {
-            while (opModeIsActive() && currentGyroPos 0 < targetGyroPos 90 && motorPower > 2) {
+            while (opModeIsActive() && currentGyroPos < targetGyroPos && motorPower > 2) {
 
                 // current gyro settings
                 currentGyroPos = hwMap.gyro.getHeading();
