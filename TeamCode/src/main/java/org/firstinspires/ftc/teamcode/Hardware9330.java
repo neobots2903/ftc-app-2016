@@ -48,7 +48,7 @@ public class Hardware9330 {
         beBoop = hwMap.servo.get("beBoop");
         brake = hwMap.servo.get("brake");
 
-        //CSensor = hwMap.colorSensor.get("CSensor");
+        CSensor = hwMap.colorSensor.get("CSensor");
 
         //  gyro = hwMap.gyroSensor.get("gyro");
 
