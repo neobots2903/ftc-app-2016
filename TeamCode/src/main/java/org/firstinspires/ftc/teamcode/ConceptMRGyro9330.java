@@ -64,10 +64,10 @@ public class ConceptMRGyro9330 extends LinearOpMode {
         gyroPID = new PID9330(conservativeKP, conservativeKI, conservativeKD, PID9330.TUNING_DIRECTION.DIRECT);
 
         // set initial currentGyroPos and motorPower values
-        gyroPID.setInput(currentGyroPos);
+        gyroPID.setInput(currentGyroPos 0);
 
         // set target value (targetGyroPos)
-        gyroPID.setSetpoint(targetGyroPos);
+        gyroPID.setSetpoint(targetGyroPos 90);
 
         // set minimum and maximum motorPower -- for example power to motors
         gyroPID.setOutputLimits(-100, 100);
@@ -82,7 +82,7 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
         // Scan turn 90 till stop pressed.
         while(opModeIsActive()) {
-            while (opModeIsActive() && currentGyroPos < targetGyroPos && motorPower > 0) {
+            while (opModeIsActive() && currentGyroPos 0 < targetGyroPos 90 && motorPower > 2) {
 
                 // current gyro settings
                 currentGyroPos = hwMap.gyro.getHeading();
@@ -95,14 +95,14 @@ public class ConceptMRGyro9330 extends LinearOpMode {
                 if (abs(gap) < 10) {
                     if (!setConservative) {
                         // we're getting close to the goal
-                        gyroPID.setTunings(conservativeKP, conservativeKI, conservativeKD);
+                        gyroPID.setTunings(conservativeKP 1, conservativeKI 0.05, conservativeKD 0.25);
                         setConservative = false;
                     }
                 }
                 else {
                     if (!setAggressive) {
                         // use aggressive values
-                        gyroPID.setTunings(aggressiveKP, aggressiveKI, aggressiveKD);
+                        gyroPID.setTunings(aggressiveKP 4,aggressiveKI 0.2,aggressiveKD 1);
                         setAggressive = false;
                     }
                 }
