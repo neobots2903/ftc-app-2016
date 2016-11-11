@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -21,7 +22,7 @@ public class Hardware9330 {
     public DcMotor shotMotor = null;
     public DcMotor pickUpMotor = null;
 
-    public GyroSensor gyro = null;
+    public ModernRoboticsI2cGyro gyro = null;
     public Servo  brake    = null;
     public Servo beBoop    = null;
 

@@ -54,12 +54,23 @@ public class ConceptMRGyro9330 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
+        int xVal, yVal, zVal = 0;     // Gyro rate Values
+        int heading = 0;              // Gyro integrated heading
+        int angleZ = 0;
+
         hwMap.init(hardwareMap);
 
         // setup
         targetGyroPos = 90;
         currentGyroPos = 0;
         motorPower = 0;
+
+        hwMap.gyro.calibrate();
+
+        while (!isStopRequested() && hwMap.gyro.isCalibrating())  {
+            sleep(50);
+            idle();
+        }
 
         gyroPID = new PID9330(conservativeKP, conservativeKI, conservativeKD, PID9330.TUNING_DIRECTION.DIRECT);
 
@@ -95,14 +106,14 @@ public class ConceptMRGyro9330 extends LinearOpMode {
                 if (abs(gap) < 10) {
                     if (!setConservative) {
                         // we're getting close to the goal
-                        gyroPID.setTunings(conservativeKP, conservativeKI , conservativeKD);
+                        gyroPID.setTunings(conservativeKP, conservativeKI, conservativeKD);
                         setConservative = false;
                     }
                 }
                 else {
                     if (!setAggressive) {
                         // use aggressive values
-                        gyroPID.setTunings(aggressiveKP,aggressiveKI ,aggressiveKD );
+                        gyroPID.setTunings(aggressiveKP, aggressiveKI, aggressiveKD);
                         setAggressive = false;
                     }
                 }
@@ -118,6 +129,24 @@ public class ConceptMRGyro9330 extends LinearOpMode {
                 hwMap.leftRearMotor.setPower(motorPower);
                 hwMap.rightRearMotor.setPower(motorPower);
 
+                // get the x, y, and z values (rate of change of angle).
+                xVal = hwMap.gyro.rawX();
+                yVal = hwMap.gyro.rawY();
+                zVal = hwMap.gyro.rawZ();
+
+                // get the heading info.
+                // the Modern Robotics' gyro sensor keeps
+                // track of the current heading for the Z axis only.
+                heading = hwMap.gyro.getHeading();
+                // angleZ  = hwMap.gyro.getIntegratedZValue();
+
+                telemetry.addData(">", "Press A & B to reset Heading.");
+                telemetry.addData("0", "Heading %03d", heading);
+                telemetry.addData("1", "Int. Ang. %03d", angleZ);
+                telemetry.addData("2", "X av. %03d", xVal);
+                telemetry.addData("3", "Y av. %03d", yVal);
+                telemetry.addData("4", "Z av. %03d", zVal);
+                telemetry.update();
             }
         }
 
