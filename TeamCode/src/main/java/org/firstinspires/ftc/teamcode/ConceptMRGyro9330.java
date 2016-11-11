@@ -95,14 +95,14 @@ public class ConceptMRGyro9330 extends LinearOpMode {
                 if (abs(gap) < 10) {
                     if (!setConservative) {
                         // we're getting close to the goal
-                        gyroPID.setTunings(conservativeKP 1, conservativeKI 0.05, conservativeKD 0.25);
+                        gyroPID.setTunings(conservativeKP, conservativeKI , conservativeKD);
                         setConservative = false;
                     }
                 }
                 else {
                     if (!setAggressive) {
                         // use aggressive values
-                        gyroPID.setTunings(aggressiveKP 4,aggressiveKI 0.2,aggressiveKD 1);
+                        gyroPID.setTunings(aggressiveKP,aggressiveKI ,aggressiveKD );
                         setAggressive = false;
                     }
                 }
