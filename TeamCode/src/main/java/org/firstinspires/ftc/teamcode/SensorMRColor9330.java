@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /*
  *
@@ -55,11 +56,11 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name = "Sensor: MR Color", group = "Sensor")
-@Disabled
+//@Disabled
 public class SensorMRColor9330 extends LinearOpMode {
 
   ColorSensor colorSensor;    // Hardware Device Object
-
+  Hardware9330 hwMap = new Hardware9330();
 
   @Override
   public void runOpMode() {
@@ -69,6 +70,9 @@ public class SensorMRColor9330 extends LinearOpMode {
 
     // values is a reference to the hsvValues array.
     final float values[] = hsvValues;
+
+    hwMap.init(hardwareMap);
+
 
     // get a reference to the RelativeLayout so we can change the background
     // color of the Robot Controller app to match the hue detected by the RGB sensor.
@@ -82,7 +86,7 @@ public class SensorMRColor9330 extends LinearOpMode {
     boolean bLedOn = true;
 
     // get a reference to our ColorSensor object.
-    colorSensor = hardwareMap.colorSensor.get("sensor_color");
+    colorSensor = hwMap.CSensor;
 
     // Set the LED in the beginning
     colorSensor.enableLed(bLedOn);
