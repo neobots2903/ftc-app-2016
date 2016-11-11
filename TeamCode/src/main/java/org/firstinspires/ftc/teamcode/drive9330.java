@@ -60,6 +60,18 @@ public class drive9330{
             set motor speed to 0
         end if
         */
+
+        if (time > 0) {
+           motorSpeed = 1;
+            double targetTime = System.currentTimeMillis() + time;
+            while (System.currentTimeMillis() <= targetTime) {
+                robot9330.leftFrontMotor.setPower(-motorSpeed);
+                robot9330.rightFrontMotor.setPower(motorSpeed);
+                robot9330.rightRearMotor.setPower(motorSpeed);
+                robot9330.leftRearMotor.setPower(-motorSpeed);
+            }
+            motorSpeed = 0;
+        }
     }
     
     // now we could have a different method that species the time and speed. 
@@ -77,7 +89,20 @@ public class drive9330{
             set motor speed to 0
         end if
         */
+
+        if (time > 0) {
+            motorSpeed = newSpeed;
+            double targetTime = System.currentTimeMillis() + time;
+            while (System.currentTimeMillis() <= targetTime) {
+                robot9330.leftFrontMotor.setPower(-motorSpeed);
+                robot9330.rightFrontMotor.setPower(motorSpeed);
+                robot9330.rightRearMotor.setPower(motorSpeed);
+                robot9330.leftRearMotor.setPower(-motorSpeed);
+            }
+            motorSpeed = 0;
+        }
     }
+
 
     public void moveForward(float speed){
 
