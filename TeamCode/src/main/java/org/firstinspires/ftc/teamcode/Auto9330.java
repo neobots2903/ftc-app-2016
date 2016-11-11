@@ -50,9 +50,11 @@ public class Auto9330 extends OpMode {
     // we tried :(
         // Okay, so what I was thinking was not here, but in drive9330...  and then in the loop code 
         // see my comments above.
-    public void driveForwardOneSecond() {
-        setTime(long 1000);
-        drive();
+
+    // WOOPS IGNORE THIS
+    // public void driveForwardOneSecond() {
+    //     setTime(long 1000);
+    //     drive();
     }
 
 
