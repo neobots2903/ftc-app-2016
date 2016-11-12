@@ -4,6 +4,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -27,6 +28,7 @@ public class Hardware9330 {
     public Servo beBoop    = null;
 
     public ColorSensor CSensor = null;
+    public ColorSensor BBSensor = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -50,6 +52,9 @@ public class Hardware9330 {
         brake = hwMap.servo.get("brake");
 
         CSensor = hwMap.colorSensor.get("CSensor");
+        BBSensor = hwMap.colorSensor.get("BBSensor");
+        BBSensor.setI2cAddress(I2cAddr.create7bit(0x14));
+        CSensor.setI2cAddress(I2cAddr.create7bit());
 
         //  gyro = hwMap.gyroSensor.get("gyro");
 
