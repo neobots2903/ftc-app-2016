@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -48,7 +49,7 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
     static boolean setConservative = false;
     static boolean setAggressive = false;
-
+    ModernRoboticsI2cGyro gyro;
 
 
     @Override
@@ -60,17 +61,28 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
         hwMap.init(hardwareMap);
 
+        gyro = (ModernRoboticsI2cGyro)hardwareMap.get("gyro");
+
         // setup
         targetGyroPos = 90;
         currentGyroPos = 0;
-        motorPower = 0;
+        motorPower = 100;
 
-        hwMap.gyro.calibrate();
+        telemetry.addData(">", "Starting Calibration! Please wait!");
+        telemetry.update();
 
-        while (!isStopRequested() && hwMap.gyro.isCalibrating())  {
+        gyro.calibrate();
+
+        while (!isStopRequested() && gyro.isCalibrating())  {
             sleep(50);
             idle();
         }
+
+        telemetry.addData(">", "Finished Calibration! Press Start");
+        telemetry.update();
+
+
+        gyro.resetZAxisIntegrator();
 
         gyroPID = new PID9330(conservativeKP, conservativeKI, conservativeKD, PID9330.TUNING_DIRECTION.DIRECT);
 
@@ -87,36 +99,46 @@ public class ConceptMRGyro9330 extends LinearOpMode {
         gyroPID.setMode(PID9330.OPERATING_MODE.AUTOMATIC);
 
         // Wait for the start button
-        telemetry.addData(">", "Press Start to scan Servo." );
+        telemetry.addData(">", "Press Start to test gyro." );
         telemetry.update();
         waitForStart();
 
+        xVal = gyro.rawX();
+        yVal = gyro.rawY();
+        zVal = gyro.rawZ();
+
+        // get the heading info.
+        // the Modern Robotics' gyro sensor keeps
+        // track of the current heading for the Z axis only.
+        heading = gyro.getHeading();
+        angleZ  = gyro.getIntegratedZValue();
+
         // Scan turn 90 till stop pressed.
         while(opModeIsActive()) {
-            while (opModeIsActive() && currentGyroPos < targetGyroPos && motorPower > 2) {
+            while (opModeIsActive() && motorPower != 0) {
 
                 // current gyro settings
-                currentGyroPos = hwMap.gyro.getHeading();
+                currentGyroPos = gyro.getHeading();
                 if (currentGyroPos > 180) {
                     currentGyroPos -= 360;
                 }
 
                 // see if we are getting close
                 double gap = targetGyroPos - currentGyroPos;
-                if (abs(gap) < 10) {
-                    if (!setConservative) {
-                        // we're getting close to the goal
-                        gyroPID.setTunings(conservativeKP, conservativeKI, conservativeKD);
-                        setConservative = false;
-                    }
-                }
-                else {
-                    if (!setAggressive) {
-                        // use aggressive values
-                        gyroPID.setTunings(aggressiveKP, aggressiveKI, aggressiveKD);
-                        setAggressive = false;
-                    }
-                }
+//                if (abs(gap) < 10) {
+//                    if (!setConservative) {
+//                        // we're getting close to the goal
+//                        gyroPID.setTunings(conservativeKP, conservativeKI, conservativeKD);
+//                        setConservative = false;
+//                    }
+//                }
+//                else {
+//                    if (!setAggressive) {
+//                        // use aggressive values
+//                        gyroPID.setTunings(aggressiveKP, aggressiveKI, aggressiveKD);
+//                        setAggressive = false;
+//                    }
+//                }
 
                 // compute the power to provide to motors
                 motorPower = gyroPID.compute(currentGyroPos);
@@ -130,15 +152,15 @@ public class ConceptMRGyro9330 extends LinearOpMode {
                 hwMap.rightRearMotor.setPower(motorPower);
 
                 // get the x, y, and z values (rate of change of angle).
-                xVal = hwMap.gyro.rawX();
-                yVal = hwMap.gyro.rawY();
-                zVal = hwMap.gyro.rawZ();
+                xVal = gyro.rawX();
+                yVal = gyro.rawY();
+                zVal = gyro.rawZ();
 
                 // get the heading info.
                 // the Modern Robotics' gyro sensor keeps
                 // track of the current heading for the Z axis only.
-                heading = hwMap.gyro.getHeading();
-                // angleZ  = hwMap.gyro.getIntegratedZValue();
+                heading = gyro.getHeading();
+                angleZ  = gyro.getIntegratedZValue();
 
                 telemetry.addData(">", "Press A & B to reset Heading.");
                 telemetry.addData("0", "Heading %03d", heading);
@@ -146,6 +168,9 @@ public class ConceptMRGyro9330 extends LinearOpMode {
                 telemetry.addData("2", "X av. %03d", xVal);
                 telemetry.addData("3", "Y av. %03d", yVal);
                 telemetry.addData("4", "Z av. %03d", zVal);
+                telemetry.addData("5", "currGyroPos %03f", currentGyroPos);
+                telemetry.addData("6", "targGyroPos %03f", targetGyroPos);
+                telemetry.addData("7", "motorPoswer %03f", motorPower);
                 telemetry.update();
             }
         }

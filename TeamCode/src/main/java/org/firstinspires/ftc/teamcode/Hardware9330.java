@@ -27,7 +27,7 @@ public class Hardware9330 {
     public Servo  brake    = null;
     public Servo beBoop    = null;
 
-    public ColorSensor CSensor = null;
+    public ColorSensor lineCSensor = null;
     public ColorSensor BBSensor = null;
 
     /* local OpMode members. */
@@ -51,12 +51,14 @@ public class Hardware9330 {
         beBoop = hwMap.servo.get("beBoop");
         brake = hwMap.servo.get("brake");
 
-        CSensor = hwMap.colorSensor.get("CSensor");
+        lineCSensor = hwMap.colorSensor.get("CSensor");
         BBSensor = hwMap.colorSensor.get("BBSensor");
-        BBSensor.setI2cAddress(I2cAddr.create7bit(0x14));
-        CSensor.setI2cAddress(I2cAddr.create7bit());
+        lineCSensor.setI2cAddress(I2cAddr.create7bit(0x26));
+        BBSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
+        lineCSensor.enableLed(true);
+        BBSensor.enableLed(true);
 
-        //  gyro = hwMap.gyroSensor.get("gyro");
+        gyro = (ModernRoboticsI2cGyro)hwMap.gyroSensor.get("gyro");
 
 //        armMotor    = hwMap.dcMotor.get("left_arm");
 //        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors

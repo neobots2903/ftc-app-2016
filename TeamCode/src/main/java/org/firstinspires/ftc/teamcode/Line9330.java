@@ -12,7 +12,7 @@ public class Line9330 {
 
     public Line9330(Hardware9330 robotMap) {
         hwMap = robotMap;
-        csensor = hwMap.CSensor;
+        csensor = hwMap.lineCSensor;
         csensor.enableLed(true);
     }
 
