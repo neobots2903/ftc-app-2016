@@ -51,35 +51,14 @@ public class Hardware9330 {
         beBoop = hwMap.servo.get("beBoop");
         brake = hwMap.servo.get("brake");
 
-        lineCSensor = hwMap.colorSensor.get("CSensor");
-        BBSensor = hwMap.colorSensor.get("BBSensor");
-        lineCSensor.setI2cAddress(I2cAddr.create7bit(0x26));
-        BBSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
-        lineCSensor.enableLed(true);
-        BBSensor.enableLed(true);
+//        lineCSensor = hwMap.colorSensor.get("CSensor");
+//        BBSensor = hwMap.colorSensor.get("BBSensor");
+//        lineCSensor.setI2cAddress(I2cAddr.create7bit(0x26));
+//        BBSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
+//        lineCSensor.enableLed(true);
+//        BBSensor.enableLed(true);
+//        gyro = (ModernRoboticsI2cGyro)hwMap.gyroSensor.get("gyro");
 
-        gyro = (ModernRoboticsI2cGyro)hwMap.gyroSensor.get("gyro");
-
-//        armMotor    = hwMap.dcMotor.get("left_arm");
-//        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-//        rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-//
-//        // Set all motors to zero power
-//        leftMotor.setPower(0);
-//        rightMotor.setPower(0);
-//        armMotor.setPower(0);
-//
-//        // Set all motors to run without encoders.
-//        // May want to use RUN_USING_ENCODERS if encoders are installed.
-//        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-//        // Define and initialize ALL installed servos.
-//        brake = hwMap.servo.get("brake");
-//        beBoop = hwMap.servo.get("beBoop");
-//        brake.setPosition(MID_SERVO);
-//        beBoop.setPosition(MID_SERVO);
 
         brake.setDirection(Servo.Direction.REVERSE);
 
