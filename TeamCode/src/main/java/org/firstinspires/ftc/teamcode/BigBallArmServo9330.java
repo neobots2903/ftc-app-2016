@@ -56,7 +56,6 @@ public class BigBallArmServo9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
 
-    final static double BBOOP_INCREMENT = 0.01;
     static final double B_ARM_MAX_POS =  90;
     static final double B_ARM_MIN_POS =  0;
     private boolean bArmIsDown;
@@ -140,17 +139,9 @@ public class BigBallArmServo9330 extends OpMode
 
         // beBoop handling
         telemetry.addData("Status", "currentpos: " + currentPos);
-        if(gamepad2.x  && currentPos < BBMAX_POS){
-            currentPos += BBOOP_INCREMENT;
-            robot9330.beBoop.setPosition((currentPos));
-        }
-        else if (gamepad2.y && currentPos > BBMIN_POS){
-            currentPos -= BBOOP_INCREMENT;
-            robot9330.beBoop.setPosition((currentPos));
-        }
 
         // brake handling
-        if (gamepad1.b && buttonBReleased) {
+        if (gamepad1.a && buttonAReleased) {
                 if (brake.isBrakeEngaged())
                     brake.releaseBrake();
                 else
@@ -181,12 +172,14 @@ public class BigBallArmServo9330 extends OpMode
 //        }
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
+//  Code to lift arm
+
     @Override
-    public void liftBigBallArmServer() {
+    public void liftBigBallArmServo() {
         robot9330.bigBallArmServo.setPosition(B_ARM_MAX_POS);
+    }
+    public void lowerBigBallArmServo() {
+        robot9330.bigBallArmServo.setPosition(B_ARM_MIN_POS);
     }
 
 }
