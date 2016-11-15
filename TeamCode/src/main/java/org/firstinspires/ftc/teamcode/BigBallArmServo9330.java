@@ -52,13 +52,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="TeleOp9330", group="Opmode")  // @Autonomous(...) is the other common choice
 //@Disabled
-public class BigBallArmSensorThingForCodingThatWeWillAllApreciateAndLove9330 extends OpMode
+public class BigBallArmServo9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
-
-    final static double BBOOP_INCREMENT = 0.01;
-    static final double BBMAX_POS     =  1.0;     // Maximum rotational position
-    static final double BBMIN_POS     =  0.0;     // Minimum rotational position
 
     static final double B_ARM_MAX_POS =  90;
     static final double B_ARM_MIN_POS =  0;
@@ -99,100 +95,11 @@ public class BigBallArmSensorThingForCodingThatWeWillAllApreciateAndLove9330 ext
 
     }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
-     */
-    @Override
-    public void init_loop() {
+    public void liftBigBallArmServo() {
+        robot9330.bigBallArmServo.setPosition(B_ARM_MAX_POS);
     }
-
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
-    @Override
-    public void start() {
-        runtime.reset();
-    }
-
-
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
-     */
-    @Override
-    public void loop() {
-        telemetry.addData("Status", "Running: " + runtime.toString());
-
-        // omniwheel X drive:
-        //        X FRONT X
-        //      X           X
-        //    X  P1       P2  X
-        //            X
-        //           XXX
-        //            X
-        //    X  P4       P3  X
-        //      X           X
-        //        X       X
-        double xPower = gamepad1.left_stick_x;
-        double yPower = gamepad1.left_stick_y;
-        double spinPower = gamepad1.right_stick_x;
-
-        robot9330.leftFrontMotor.setPower(-yPower - xPower - spinPower);
-        robot9330.rightFrontMotor.setPower(yPower - xPower - spinPower);
-        robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
-        robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
-
-        // beBoop handling
-        telemetry.addData("Status", "currentpos: " + currentPos);
-        if(gamepad2.x  && currentPos < BBMAX_POS){
-            currentPos += BBOOP_INCREMENT;
-            robot9330.beBoop.setPosition((currentPos));
-        }
-        else if (gamepad2.y && currentPos > BBMIN_POS){
-            currentPos -= BBOOP_INCREMENT;
-            robot9330.beBoop.setPosition((currentPos));
-        }
-
-        // brake handling
-        if (gamepad1.b && buttonBReleased) {
-                if (brake.isBrakeEngaged())
-                    brake.releaseBrake();
-                else
-                    brake.engageBrake();
-                buttonBReleased = false;
-        }
-        else if (!gamepad1.b) {
-            buttonBReleased = true;
-        }
-
-        // pickup motor handling
-        if(gamepad2.right_bumper){
-            robot9330.pickUpMotor.setPower(1);
-        }
-        else if(gamepad2.left_bumper){
-            robot9330.pickUpMotor.setPower(-1);
-        }
-        else{
-            robot9330.pickUpMotor.setPower(0);
-        }
-
-//        // shot motor handling
-//        if(gamepad2.a){
-//            robot9330.shotMotor.setPower(1);
-//        }
-//        else{
-//            robot9330.shotMotor.setPower(0);
-//        }
-    }
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-        robot9330.leftFrontMotor.setPower(0);
-        robot9330.rightFrontMotor.setPower(0);
-        robot9330.rightRearMotor.setPower(0);
-        robot9330.leftRearMotor.setPower(0);
+    public void lowerBigBallArmServo() {
+        robot9330.bigBallArmServo.setPosition(B_ARM_MIN_POS);
     }
 
 }
