@@ -54,7 +54,7 @@ public class Hardware9330 {
         beBoop = hwMap.servo.get("beBoop");
         brake = hwMap.servo.get("brake");
         bigBallArmServo = hwMap.servo.get("bigBallArmServo");
-        bigBallPickup = hwMap.dcMotor.get("bigBallPickup");
+        bigBallPickup = hwMap.servo.get("bigBallPickup");
 
 //        lineCSensor = hwMap.colorSensor.get("CSensor");
 //        BBSensor = hwMap.colorSensor.get("BBSensor");
