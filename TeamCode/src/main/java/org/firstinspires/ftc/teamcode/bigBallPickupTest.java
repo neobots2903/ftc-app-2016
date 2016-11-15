@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 /**
  * Created by NeoBOTS on 11/14/2016.
  */
-@TeleOp(name="TeleOp9330", group="Opmode")
+@TeleOp(name="PickupTest9330", group="Opmode")
 public class bigBallPickupTest extends OpMode{
     Hardware9330 robot9330 = new Hardware9330();
 
