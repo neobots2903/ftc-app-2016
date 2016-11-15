@@ -24,6 +24,8 @@ public class Hardware9330 {
     public DcMotor pickUpMotor = null;
 
     public ModernRoboticsI2cGyro gyro = null;
+    public DcMotor bigBallPickup = null;
+
     public Servo  brake    = null;
     public Servo beBoop    = null;
     public Servo bigBallArmServo   = null;
@@ -52,6 +54,7 @@ public class Hardware9330 {
         beBoop = hwMap.servo.get("beBoop");
         brake = hwMap.servo.get("brake");
         bigBallArmServo = hwMap.servo.get("bigBallArmServo");
+        bigBallPickup = hwMap.dcMotor.get("bigBallPickup");
 
 //        lineCSensor = hwMap.colorSensor.get("CSensor");
 //        BBSensor = hwMap.colorSensor.get("BBSensor");
