@@ -62,6 +62,7 @@ public class BigBallArmSensorThingForCodingThatWeWillAllApreciateAndLove9330 ext
 
     static final double B_ARM_MAX_POS =  90;
     static final double B_ARM_MIN_POS =  0;
+    private boolean bArmIsDown;
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
