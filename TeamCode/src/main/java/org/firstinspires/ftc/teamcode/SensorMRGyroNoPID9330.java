@@ -48,9 +48,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
 */
 @TeleOp(name = "Sensor: MR Gyro", group = "Sensor")
-@Disabled
+
 public class SensorMRGyroNoPID9330 extends LinearOpMode {
 
+  int headingError;
+  int currentHeading;
+  static float midPower = 40;
+  int targetHeading = 90;
+  float driveGain = (float) 0.70;
   @Override
   public void runOpMode() {
 
