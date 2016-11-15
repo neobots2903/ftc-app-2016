@@ -52,14 +52,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="TeleOp9330", group="Opmode")  // @Autonomous(...) is the other common choice
 //@Disabled
-public class BigBallArmSensorThingForCodingThatWeWillAllApreciateAndLove9330 extends OpMode
+public class BigBallArmServo9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
 
     final static double BBOOP_INCREMENT = 0.01;
-    static final double BBMAX_POS     =  1.0;     // Maximum rotational position
-    static final double BBMIN_POS     =  0.0;     // Minimum rotational position
-
     static final double B_ARM_MAX_POS =  90;
     static final double B_ARM_MIN_POS =  0;
     private boolean bArmIsDown;
@@ -188,11 +185,8 @@ public class BigBallArmSensorThingForCodingThatWeWillAllApreciateAndLove9330 ext
      * Code to run ONCE after the driver hits STOP
      */
     @Override
-    public void stop() {
-        robot9330.leftFrontMotor.setPower(0);
-        robot9330.rightFrontMotor.setPower(0);
-        robot9330.rightRearMotor.setPower(0);
-        robot9330.leftRearMotor.setPower(0);
+    public void liftBigBallArmServer() {
+        robot9330.bigBallArmServo.setPosition(B_ARM_MAX_POS);
     }
 
 }
