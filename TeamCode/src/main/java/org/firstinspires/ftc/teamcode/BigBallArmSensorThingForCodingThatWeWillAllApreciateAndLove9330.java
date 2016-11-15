@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
- * This file contains an example of an iterative (Non-Linear) "OpMode".
+ * This file contains an example of an iterative (Non-Linear) "OpMode"
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
  * The names of OpModes appear on the menu of the FTC Driver Station.
  * When an selection is made from the menu, the corresponding OpMode
@@ -52,13 +52,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="TeleOp9330", group="Opmode")  // @Autonomous(...) is the other common choice
 //@Disabled
-public class TeleOp9330 extends OpMode
+public class BigBallArmSensorThingForCodingThatWeWillAllApreciateAndLove9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
 
     final static double BBOOP_INCREMENT = 0.01;
     static final double BBMAX_POS     =  1.0;     // Maximum rotational position
     static final double BBMIN_POS     =  0.0;     // Minimum rotational position
+
+    static final double B_ARM_MAX_POS =  90;
+    static final double B_ARM_MIN_POS =  0;
+    private boolean bArmIsDown;
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();

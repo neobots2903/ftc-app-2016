@@ -23,6 +23,7 @@ public class drive9330{
 
     Hardware9330 robot9330 = new Hardware9330();
     long targetTime = 0;
+    float motorSpeed;
 
     public void init(Hardware9330 robotmap) {
 
@@ -38,6 +39,70 @@ public class drive9330{
             moveForward(0);
         }
     }
+    
+    // this is what I was thinking about when I wanted you to 
+    // add the ability to drive for a time.
+    // right now, we have a drive method that will be useful for when
+    // we have other things we want to do besides drive, but we 
+    // also need to be able to just drive in a straight line for a 
+    // certain period of time.  If we had a different drivetrain, we 
+    // could add a drive for a specified distance, but, alas, we don't.
+    public void drive(int time)
+    {
+        // pseudocode for what I want done here:
+        /*
+        if time is greater than 0
+            set motor speed to 1
+            set target time to current system time plus time
+            while current system time is less than or equal to target time do
+                set the robot motors speeds to motor speed
+            end while
+            set motor speed to 0
+        end if
+        */
+
+        if (time > 0) {
+           motorSpeed = 1;
+            double targetTime = System.currentTimeMillis() + time;
+            while (System.currentTimeMillis() <= targetTime) {
+                robot9330.leftFrontMotor.setPower(-motorSpeed);
+                robot9330.rightFrontMotor.setPower(motorSpeed);
+                robot9330.rightRearMotor.setPower(motorSpeed);
+                robot9330.leftRearMotor.setPower(-motorSpeed);
+            }
+            motorSpeed = 0;
+        }
+    }
+    
+    // now we could have a different method that species the time and speed. 
+    // (this is called method overloading) 
+    public void drive(int time, float newSpeed)
+    {
+        // pseudocode for what I want done here:
+        /*
+        if time is greater than 0
+            set motor speed to newSpeed
+            set target time to current system time plus time
+            while current system time is less than or equal to target time do
+                set the robot motors speeds to motor speed
+            end while
+            set motor speed to 0
+        end if
+        */
+
+        if (time > 0) {
+            motorSpeed = newSpeed;
+            double targetTime = System.currentTimeMillis() + time;
+            while (System.currentTimeMillis() <= targetTime) {
+                robot9330.leftFrontMotor.setPower(-motorSpeed);
+                robot9330.rightFrontMotor.setPower(motorSpeed);
+                robot9330.rightRearMotor.setPower(motorSpeed);
+                robot9330.leftRearMotor.setPower(-motorSpeed);
+            }
+            motorSpeed = 0;
+        }
+    }
+
 
     public void moveForward(float speed){
 

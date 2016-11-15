@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -21,11 +23,13 @@ public class Hardware9330 {
     public DcMotor shotMotor = null;
     public DcMotor pickUpMotor = null;
 
-    public GyroSensor gyro = null;
+    public ModernRoboticsI2cGyro gyro = null;
     public Servo  brake    = null;
     public Servo beBoop    = null;
+    public Servo bigBallArmServo   = null;
 
-    public ColorSensor CSensor = null;
+    public ColorSensor lineCSensor = null;
+    public ColorSensor BBSensor = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -47,31 +51,16 @@ public class Hardware9330 {
         pickUpMotor = hwMap.dcMotor.get("motorPickup");
         beBoop = hwMap.servo.get("beBoop");
         brake = hwMap.servo.get("brake");
+        bigBallArmServo = hwMap.servo.get("bigBallArmServo");
 
-        //CSensor = hwMap.colorSensor.get("CSensor");
+//        lineCSensor = hwMap.colorSensor.get("CSensor");
+//        BBSensor = hwMap.colorSensor.get("BBSensor");
+//        lineCSensor.setI2cAddress(I2cAddr.create7bit(0x26));
+//        BBSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
+//        lineCSensor.enableLed(true);
+//        BBSensor.enableLed(true);
+//        gyro = (ModernRoboticsI2cGyro)hwMap.gyroSensor.get("gyro");
 
-        //  gyro = hwMap.gyroSensor.get("gyro");
-
-//        armMotor    = hwMap.dcMotor.get("left_arm");
-//        leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-//        rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-//
-//        // Set all motors to zero power
-//        leftMotor.setPower(0);
-//        rightMotor.setPower(0);
-//        armMotor.setPower(0);
-//
-//        // Set all motors to run without encoders.
-//        // May want to use RUN_USING_ENCODERS if encoders are installed.
-//        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-//        // Define and initialize ALL installed servos.
-//        brake = hwMap.servo.get("brake");
-//        beBoop = hwMap.servo.get("beBoop");
-//        brake.setPosition(MID_SERVO);
-//        beBoop.setPosition(MID_SERVO);
 
         brake.setDirection(Servo.Direction.REVERSE);
 

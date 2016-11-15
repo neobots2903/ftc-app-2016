@@ -14,7 +14,7 @@ public class BBoop9330 {
     public BBoop9330(Hardware9330 robotMap) {
         hwMap = robotMap;
         hwMap.beBoop.setPosition(RIGHT_POS);
-        csensor = hwMap.CSensor;
+        csensor = hwMap.lineCSensor;
         csensor.enableLed(true);
     }
 

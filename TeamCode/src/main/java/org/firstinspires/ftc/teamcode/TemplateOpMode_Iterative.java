@@ -32,6 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -50,26 +51,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeleOp9330", group="Opmode")  // @Autonomous(...) is the other common choice
-//@Disabled
-public class TeleOp9330 extends OpMode
+@TeleOp(name="Template: Iterative OpMode", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
+@Disabled
+public class TemplateOpMode_Iterative extends OpMode
 {
-    Hardware9330 robot9330 = new Hardware9330();
-
-    final static double BBOOP_INCREMENT = 0.01;
-    static final double BBMAX_POS     =  1.0;     // Maximum rotational position
-    static final double BBMIN_POS     =  0.0;     // Minimum rotational position
-
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
 
-    // beBoop position
-    double currentPos;
-    boolean rampUp = true;
+    // private DcMotor leftMotor = null;
+    // private DcMotor rightMotor = null;
 
-    Brake9330 brake = null;
-    private long lastBrakeChange;
-    private boolean buttonBReleased = true;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -81,18 +72,14 @@ public class TeleOp9330 extends OpMode
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the phone).
          */
-        robot9330.init(hardwareMap);
+        // leftMotor  = hardwareMap.dcMotor.get("left_drive");
+        // rightMotor = hardwareMap.dcMotor.get("right_drive");
 
-        telemetry.addData("Status", "Initialized");
-
-        currentPos = 0.5;
-        robot9330.beBoop.scaleRange(0, 1);
-        robot9330.beBoop.setPosition(.5);
-
-        brake = new Brake9330(robot9330);
-        brake.releaseBrake();
-        lastBrakeChange = System.currentTimeMillis();
-
+        // eg: Set the drive motor directions:
+        // Reverse the motor that runs backwards when connected directly to the battery
+        // leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        //  rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        // telemetry.addData("Status", "Initialized");
     }
 
     /*
@@ -110,7 +97,6 @@ public class TeleOp9330 extends OpMode
         runtime.reset();
     }
 
-
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
@@ -118,66 +104,9 @@ public class TeleOp9330 extends OpMode
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
 
-        // omniwheel X drive:
-        //        X FRONT X
-        //      X           X
-        //    X  P1       P2  X
-        //            X
-        //           XXX
-        //            X
-        //    X  P4       P3  X
-        //      X           X
-        //        X       X
-        double xPower = gamepad1.left_stick_x;
-        double yPower = gamepad1.left_stick_y;
-        double spinPower = gamepad1.right_stick_x;
-
-        robot9330.leftFrontMotor.setPower(-yPower - xPower - spinPower);
-        robot9330.rightFrontMotor.setPower(yPower - xPower - spinPower);
-        robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
-        robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
-
-        // beBoop handling
-        telemetry.addData("Status", "currentpos: " + currentPos);
-        if(gamepad2.x  && currentPos < BBMAX_POS){
-            currentPos += BBOOP_INCREMENT;
-            robot9330.beBoop.setPosition((currentPos));
-        }
-        else if (gamepad2.y && currentPos > BBMIN_POS){
-            currentPos -= BBOOP_INCREMENT;
-            robot9330.beBoop.setPosition((currentPos));
-        }
-
-        // brake handling
-        if (gamepad1.b && buttonBReleased) {
-                if (brake.isBrakeEngaged())
-                    brake.releaseBrake();
-                else
-                    brake.engageBrake();
-                buttonBReleased = false;
-        }
-        else if (!gamepad1.b) {
-            buttonBReleased = true;
-        }
-
-        // pickup motor handling
-        if(gamepad2.right_bumper){
-            robot9330.pickUpMotor.setPower(1);
-        }
-        else if(gamepad2.left_bumper){
-            robot9330.pickUpMotor.setPower(-1);
-        }
-        else{
-            robot9330.pickUpMotor.setPower(0);
-        }
-
-//        // shot motor handling
-//        if(gamepad2.a){
-//            robot9330.shotMotor.setPower(1);
-//        }
-//        else{
-//            robot9330.shotMotor.setPower(0);
-//        }
+        // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
+        // leftMotor.setPower(-gamepad1.left_stick_y);
+        // rightMotor.setPower(-gamepad1.right_stick_y);
     }
 
     /*
@@ -185,10 +114,6 @@ public class TeleOp9330 extends OpMode
      */
     @Override
     public void stop() {
-        robot9330.leftFrontMotor.setPower(0);
-        robot9330.rightFrontMotor.setPower(0);
-        robot9330.rightRearMotor.setPower(0);
-        robot9330.leftRearMotor.setPower(0);
     }
 
 }
