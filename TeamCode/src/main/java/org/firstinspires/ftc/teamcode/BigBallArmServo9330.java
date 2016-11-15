@@ -58,7 +58,7 @@ public class BigBallArmServo9330 extends OpMode
 
     static final double B_ARM_MAX_POS =  90;
     static final double B_ARM_MIN_POS =  0;
-    private boolean bArmIsDown;
+    private boolean bArmIsDown = false;
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
