@@ -33,7 +33,7 @@ public class ConceptMRGyro9330 extends LinearOpMode {
     boolean rampUp = true;
     Hardware9330 hwMap = new Hardware9330();
 
-    PID9330 gyroPID;
+ //   PID9330 gyroPID;
 
     double targetGyroPos;
     double currentGyroPos;
@@ -84,19 +84,19 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
         gyro.resetZAxisIntegrator();
 
-        gyroPID = new PID9330(conservativeKP, conservativeKI, conservativeKD, PID9330.TUNING_DIRECTION.DIRECT);
+ //       gyroPID = new PID9330(conservativeKP, conservativeKI, conservativeKD, PID9330.TUNING_DIRECTION.DIRECT);
 
-        // set initial currentGyroPos and motorPower values
-        gyroPID.setInput(currentGyroPos);
+        // set initial currentGyroPos and motorPower value
+ //       gyroPID.setInput(currentGyroPos);
 
         // set target value (targetGyroPos)
-        gyroPID.setSetpoint(targetGyroPos);
+//        gyroPID.setSetpoint(targetGyroPos);
 
         // set minimum and maximum motorPower -- for example power to motors
-        gyroPID.setOutputLimits(-100, 100);
+  //      gyroPID.setOutputLimits(-100, 100);
 
         // enable the PID
-        gyroPID.setMode(PID9330.OPERATING_MODE.AUTOMATIC);
+//        gyroPID.setMode(PID9330.OPERATING_MODE.AUTOMATIC);
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to test gyro." );
@@ -141,7 +141,7 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 //                }
 
                 // compute the power to provide to motors
-                motorPower = gyroPID.compute(currentGyroPos);
+  //              motorPower = gyroPID.compute(currentGyroPos);
                 if (motorPower > 0)
                     motorPower /= 100.0;
 
