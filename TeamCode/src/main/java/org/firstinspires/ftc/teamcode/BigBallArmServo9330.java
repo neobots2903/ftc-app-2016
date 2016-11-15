@@ -50,6 +50,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+@TeleOp(name="PickUp9330", group="Opmode")
 //@Disabled
 public class BigBallArmServo9330 extends OpMode
 {
@@ -94,6 +95,78 @@ public class BigBallArmServo9330 extends OpMode
 
     }
 
+    public void loop() {
+        telemetry.addData("Status", "Running: " + runtime.toString());
+
+        // omniwheel X drive:
+        //        X FRONT X
+        //      X           X
+        //    X  P1       P2  X
+        //            X
+        //           XXX
+        //            X
+        //    X  P4       P3  X
+        //      X           X
+        //        X       X
+        double xPower = gamepad1.left_stick_x;
+        double yPower = gamepad1.left_stick_y;
+        double spinPower = gamepad1.right_stick_x;
+
+        robot9330.leftFrontMotor.setPower(-yPower - xPower - spinPower);
+        robot9330.rightFrontMotor.setPower(yPower - xPower - spinPower);
+        robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
+        robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
+
+        // beBoop handling
+        //telemetry.addData("Status", "currentpos: " + currentPos);
+        //if(gamepad2.x  && currentPos < BBMAX_POS){
+        //    currentPos += BBOOP_INCREMENT;
+        //    robot9330.beBoop.setPosition((currentPos));
+        //}
+        //else if (gamepad2.y && currentPos > BBMIN_POS){
+        //    currentPos -= BBOOP_INCREMENT;
+        //    robot9330.beBoop.setPosition((currentPos));
+        //}
+
+        // brake handling
+        //if (gamepad1.b && buttonBReleased) {
+        //    if (brake.isBrakeEngaged())
+        //        brake.releaseBrake();
+        //    else
+        //        brake.engageBrake();
+        //    buttonBReleased = false;
+        //}
+        //else if (!gamepad1.b) {
+        //    buttonBReleased = true;
+        //}
+
+        if (gamepad1.a && buttonBReleased) {
+            if (bArmIsDown == true) {
+                robot9330.bigBallArmServo.setPosition(B_ARM_MIN_POS);
+            } else {
+                robot9330.bigBallArmServo.setPosition(B_ARM_MAX_POS);
+            }
+        }
+
+        // pickup motor handling
+        if(gamepad2.right_bumper){
+            robot9330.pickUpMotor.setPower(1);
+        }
+        else if(gamepad2.left_bumper){
+            robot9330.pickUpMotor.setPower(-1);
+        }
+        else{
+            robot9330.pickUpMotor.setPower(0);
+        }
+
+//        // shot motor handling
+//        if(gamepad2.a){
+//            robot9330.shotMotor.setPower(1);
+//        }
+//        else{
+//            robot9330.shotMotor.setPower(0);
+//        }
+    }
     public void liftBigBallArmServo() {
         robot9330.bigBallArmServo.setPosition(B_ARM_MAX_POS);
     }
