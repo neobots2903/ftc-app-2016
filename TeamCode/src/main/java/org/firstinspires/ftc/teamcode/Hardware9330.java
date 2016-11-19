@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 /**
  * Created by John on 10/18/2016.
@@ -33,6 +34,8 @@ public class Hardware9330 {
     public ColorSensor lineCSensor = null;
     public ColorSensor BBSensor = null;
 
+    public OpticalDistanceSensor ODS = null;
+
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -55,6 +58,7 @@ public class Hardware9330 {
         brake = hwMap.servo.get("brake");
         bigBallArmServo = hwMap.servo.get("bigBallArmServo");
         bigBallPickup = hwMap.dcMotor.get("bigBallPickup");
+        ODS = hwMap.opticalDistanceSensor.get("ODS");
         shotMotor = hwMap.dcMotor.get("motorShot");
 
 //        lineCSensor = hwMap.colorSensor.get("CSensor");
