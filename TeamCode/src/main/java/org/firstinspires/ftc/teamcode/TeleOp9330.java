@@ -137,10 +137,10 @@ public class TeleOp9330 extends OpMode
         double yPower = gamepad1.left_stick_y;
         double spinPower = gamepad1.right_stick_x;
 
-        robot9330.leftFrontMotor.setPower(-yPower - xPower - spinPower);
-        robot9330.rightFrontMotor.setPower(yPower - xPower - spinPower);
-        robot9330.rightRearMotor.setPower(yPower + xPower - spinPower);
-        robot9330.leftRearMotor.setPower(-yPower + xPower - spinPower);
+        robot9330.leftFrontMotor.setPower(-yPower + xPower - spinPower);
+        robot9330.rightFrontMotor.setPower(yPower + xPower - spinPower);
+        robot9330.rightRearMotor.setPower(yPower - xPower - spinPower);
+        robot9330.leftRearMotor.setPower(-yPower - xPower - spinPower);
 
         // beBoop handling
         telemetry.addData("Status", "currentpos: " + currentPos);
@@ -184,14 +184,26 @@ public class TeleOp9330 extends OpMode
             robot9330.shotMotor.setPower(0);
         }
 
-        if(gamepad2.dpad_up){
-            robot9330.bigBallPickup.setPower(1);
-        }
-        else if(gamepad2.dpad_down){
+        if(gamepad2.dpad_down){
             robot9330.bigBallPickup.setPower(-1);
+        }
+        else if(gamepad2.dpad_up){
+            robot9330.bigBallPickup.setPower(1);
         }
         else{
             robot9330.bigBallPickup.setPower(0);
+        }
+
+        boolean armSet = true;
+        if(gamepad2.b && gamepad2.x){
+            if (armSet == true) {
+                robot9330.bigBallArmServo.setPosition(1);
+                armSet = false;
+            }
+            else {
+                robot9330.bigBallArmServo.setPosition(.2);
+                armSet = true;
+            }
         }
     }
 

@@ -65,10 +65,10 @@ public class drive9330{
            motorSpeed = 1;
             double targetTime = System.currentTimeMillis() + time;
             while (System.currentTimeMillis() <= targetTime) {
-                robot9330.leftFrontMotor.setPower(-motorSpeed);
-                robot9330.rightFrontMotor.setPower(motorSpeed);
-                robot9330.rightRearMotor.setPower(motorSpeed);
-                robot9330.leftRearMotor.setPower(-motorSpeed);
+                robot9330.leftFrontMotor.setPower(motorSpeed);
+                robot9330.rightFrontMotor.setPower(-motorSpeed);
+                robot9330.rightRearMotor.setPower(-motorSpeed);
+                robot9330.leftRearMotor.setPower(motorSpeed);
             }
             motorSpeed = 0;
         }

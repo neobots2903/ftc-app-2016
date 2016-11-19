@@ -15,13 +15,18 @@ public class Auto9330 extends OpMode {
     Hardware9330 robot9330 = new Hardware9330();
     private ElapsedTime runtime = new ElapsedTime();
     drive9330 ds = new drive9330();
+    private Hardware9330 hwMap = null;
 
     @Override
     public void init(){
+        hwMap = new Hardware9330();
+        hwMap.init(hardwareMap);
+        ds.init(hwMap);
         ds.reset();
         ds.setTime(100);
         robot9330.init(hardwareMap);
-
+        Brake9330 brake = new Brake9330(hwMap);
+        brake.releaseBrake();
 
     }
     @Override
