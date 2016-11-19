@@ -32,7 +32,7 @@ public class Auto9330 extends OpMode {
     @Override
     public void loop() {
         // something like this, but more like
-        ds.drive(1000);  
+        ds.drive(5000);
         // where you pass how long you want to drive
         // to the drive method on drive9330.  
         // now go over to drive9330.java and look at what
@@ -46,6 +46,7 @@ public class Auto9330 extends OpMode {
         robot9330.rightRearMotor.setPower(0);
         robot9330.leftRearMotor.setPower(0);
     }
+
 
     // we tried :(
         // Okay, so what I was thinking was not here, but in drive9330...  and then in the loop code 
