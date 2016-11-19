@@ -70,6 +70,9 @@ public class TeleOp9330 extends OpMode
     Brake9330 brake = null;
     private long lastBrakeChange;
     private boolean buttonBReleased = true;
+
+    Shoot9330 shooter = null;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -92,6 +95,8 @@ public class TeleOp9330 extends OpMode
         brake = new Brake9330(robot9330);
         brake.releaseBrake();
         lastBrakeChange = System.currentTimeMillis();
+
+        shooter = new Shoot9330(robot9330);
 
     }
 
@@ -171,13 +176,13 @@ public class TeleOp9330 extends OpMode
             robot9330.pickUpMotor.setPower(0);
         }
 
-//        // shot motor handling
-//        if(gamepad2.a){
-//            robot9330.shotMotor.setPower(1);
-//        }
-//        else{
-//            robot9330.shotMotor.setPower(0);
-//        }
+        // shot motor handling
+        if(gamepad2.a){
+            robot9330.shotMotor.setPower(1);
+        }
+        else{
+            robot9330.shotMotor.setPower(0);
+        }
     }
 
     /*
