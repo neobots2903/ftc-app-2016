@@ -55,6 +55,7 @@ public class Hardware9330 {
         brake = hwMap.servo.get("brake");
         bigBallArmServo = hwMap.servo.get("bigBallArmServo");
         bigBallPickup = hwMap.dcMotor.get("bigBallPickup");
+        shotMotor = hwMap.dcMotor.get("motorShot");
 
 //        lineCSensor = hwMap.colorSensor.get("CSensor");
 //        BBSensor = hwMap.colorSensor.get("BBSensor");

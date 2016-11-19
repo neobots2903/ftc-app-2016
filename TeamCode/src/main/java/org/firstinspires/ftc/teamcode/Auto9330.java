@@ -32,7 +32,7 @@ public class Auto9330 extends OpMode {
     @Override
     public void loop() {
         // something like this, but more like
-        ds.drive(5000);
+        ds.drive(1000);
         // where you pass how long you want to drive
         // to the drive method on drive9330.  
         // now go over to drive9330.java and look at what
