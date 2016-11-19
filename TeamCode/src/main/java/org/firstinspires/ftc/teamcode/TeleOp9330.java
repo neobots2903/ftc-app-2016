@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -91,12 +92,14 @@ public class TeleOp9330 extends OpMode
         currentPos = 0.5;
         robot9330.beBoop.scaleRange(0, 1);
         robot9330.beBoop.setPosition(.5);
+        robot9330.bigBallArmServo.setPosition(.3);
 
         brake = new Brake9330(robot9330);
         brake.releaseBrake();
         lastBrakeChange = System.currentTimeMillis();
 
         shooter = new Shoot9330(robot9330);
+     //   robot9330.shotMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
@@ -177,6 +180,10 @@ public class TeleOp9330 extends OpMode
         }
 
         // shot motor handling
+        // run motor with encoder
+   /*    if(gamepad2.a){
+          robot9330.shotMotor.getCurrentPosition();
+        }*/
         if(gamepad2.a){
             robot9330.shotMotor.setPower(1);
         }

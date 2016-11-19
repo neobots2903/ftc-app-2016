@@ -60,6 +60,15 @@ public class drive9330{
             set motor speed to 0
         end if
         */
+        if (time > 0){
+            moveForward(1.0f);
+            targetTime = System.currentTimeMillis() + time;
+            while (System.currentTimeMillis() <= targetTime){
+                moveForward(motorSpeed);
+            }
+            moveForward(0);
+        }
+        //Typed out your pseudocode
 
         if (time > 0) {
            motorSpeed = 1;
@@ -89,6 +98,15 @@ public class drive9330{
             set motor speed to 0
         end if
         */
+        if(time > 0){
+            motorSpeed = newSpeed;
+            targetTime = System.currentTimeMillis() + time;
+            while(System.currentTimeMillis() <= targetTime){
+                moveForward(motorSpeed);
+            }
+            moveForward(0);
+        }
+        //typed out your pseudocode for you
 
         if (time > 0) {
             motorSpeed = newSpeed;

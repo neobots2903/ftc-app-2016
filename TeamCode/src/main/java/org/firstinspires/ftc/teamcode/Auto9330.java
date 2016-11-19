@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,7 +11,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name= "Auto9330", group ="Opmode")
-public class Auto9330 extends OpMode {
+public class Auto9330 extends LinearOpMode {
+
 
     Hardware9330 robot9330 = new Hardware9330();
     private ElapsedTime runtime = new ElapsedTime();
@@ -18,6 +20,22 @@ public class Auto9330 extends OpMode {
     private Hardware9330 hwMap = null;
 
     @Override
+    public void runOpMode() throws InterruptedException {
+        hwMap = new Hardware9330();
+        hwMap.init(hardwareMap);
+        ds.init(hwMap);
+        ds.reset();
+        ds.setTime(100);
+        robot9330.init(hardwareMap);
+        Brake9330 brake = new Brake9330(hwMap);
+        brake.releaseBrake();
+
+        wait(10000);
+        ds.drive(1500);
+        ds.drive();
+    }
+
+  /*    @Override
     public void init(){
         hwMap = new Hardware9330();
         hwMap.init(hardwareMap);
@@ -29,13 +47,15 @@ public class Auto9330 extends OpMode {
         brake.releaseBrake();
 
     }
-    @Override
+
+  @Override
     public void init_loop(){
 
 
     }
     @Override
     public void loop() {
+
         // something like this, but more like
         ds.drive(1000);
         // where you pass how long you want to drive
@@ -61,7 +81,7 @@ public class Auto9330 extends OpMode {
     // public void driveForwardOneSecond() {
     //     setTime(long 1000);
     //     drive();
-    // }
+    // }*/
 
 
 }
