@@ -24,15 +24,20 @@ public class Auto9330 extends LinearOpMode {
         hwMap = new Hardware9330();
         hwMap.init(hardwareMap);
         ds.init(hwMap);
-        ds.reset();
-        ds.setTime(100);
+
+        // not needed because we rewrote drive to just drive
+        // until completed.
+        // ds.reset();
+        // ds.setTime(100);
         robot9330.init(hardwareMap);
         Brake9330 brake = new Brake9330(hwMap);
         brake.releaseBrake();
 
         wait(10000);
         ds.drive(1500);
-        ds.drive();
+
+        // this is not needed -- drive(1500) should stop the motors when finished
+        // ds.drive();
     }
 
   /*    @Override

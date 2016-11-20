@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Created by NeoBOTS on 10/17/2016.
  *
@@ -32,7 +35,7 @@ public class drive9330{
     }
 
     public void drive() {
-        if(System.currentTimeMillis() < targetTime) {
+        if(currentTimeMillis() < targetTime) {
             moveForward(1.0f);
         }
         else{
@@ -61,26 +64,28 @@ public class drive9330{
         end if
         */
         if (time > 0){
-            moveForward(1.0f);
-            targetTime = System.currentTimeMillis() + time;
-            while (System.currentTimeMillis() <= targetTime){
-                moveForward(motorSpeed);
+            motorSpeed = 1;
+            targetTime = currentTimeMillis() + time;
+            moveForward(motorSpeed);
+            while (currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
             }
             moveForward(0);
         }
         //Typed out your pseudocode
 
-        if (time > 0) {
-           motorSpeed = 1;
-            double targetTime = System.currentTimeMillis() + time;
-            while (System.currentTimeMillis() <= targetTime) {
-                robot9330.leftFrontMotor.setPower(motorSpeed);
-                robot9330.rightFrontMotor.setPower(-motorSpeed);
-                robot9330.rightRearMotor.setPower(-motorSpeed);
-                robot9330.leftRearMotor.setPower(motorSpeed);
-            }
-            motorSpeed = 0;
-        }
+// Loop above should work -- need to update values.
+//        if (time > 0) {
+//           motorSpeed = 1;
+//            targetTime = System.currentTimeMillis() + time;
+//            while (System.currentTimeMillis() <= targetTime) {
+//                robot9330.leftFrontMotor.setPower(motorSpeed);
+//                robot9330.rightFrontMotor.setPower(-motorSpeed);
+//                robot9330.rightRearMotor.setPower(-motorSpeed);
+//                robot9330.leftRearMotor.setPower(motorSpeed);
+//            }
+//            motorSpeed = 0;
+//        }
     }
     
     // now we could have a different method that species the time and speed. 
@@ -100,34 +105,36 @@ public class drive9330{
         */
         if(time > 0){
             motorSpeed = newSpeed;
-            targetTime = System.currentTimeMillis() + time;
-            while(System.currentTimeMillis() <= targetTime){
-                moveForward(motorSpeed);
+            targetTime = currentTimeMillis() + time;
+            moveForward(motorSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
             }
             moveForward(0);
         }
         //typed out your pseudocode for you
 
-        if (time > 0) {
-            motorSpeed = newSpeed;
-            double targetTime = System.currentTimeMillis() + time;
-            while (System.currentTimeMillis() <= targetTime) {
-                robot9330.leftFrontMotor.setPower(-motorSpeed);
-                robot9330.rightFrontMotor.setPower(motorSpeed);
-                robot9330.rightRearMotor.setPower(motorSpeed);
-                robot9330.leftRearMotor.setPower(-motorSpeed);
-            }
-            motorSpeed = 0;
-        }
+// above loop should work...
+//        if (time > 0) {
+//            motorSpeed = newSpeed;
+//            double targetTime = System.currentTimeMillis() + time;
+//            while (System.currentTimeMillis() <= targetTime) {
+//                robot9330.leftFrontMotor.setPower(motorSpeed);
+//                robot9330.rightFrontMotor.setPower(-motorSpeed);
+//                robot9330.rightRearMotor.setPower(-motorSpeed);
+//                robot9330.leftRearMotor.setPower(motorSpeed);
+//            }
+//            motorSpeed = 0;
+//        }
     }
 
 
     public void moveForward(float speed){
 
-        robot9330.leftFrontMotor.setPower(-speed);
-        robot9330.rightFrontMotor.setPower(speed);
-        robot9330.rightRearMotor.setPower(speed);
-        robot9330.leftRearMotor.setPower(-speed);
+        robot9330.leftFrontMotor.setPower(speed);
+        robot9330.rightFrontMotor.setPower(-speed);
+        robot9330.rightRearMotor.setPower(-speed);
+        robot9330.leftRearMotor.setPower(speed);
     }
 
     public void turnTable (float speed){
@@ -139,7 +146,7 @@ public class drive9330{
     }
 
     public void setTime(long driveTime) {
-        targetTime = driveTime + System.currentTimeMillis();
+        targetTime = driveTime + currentTimeMillis();
     }
 
     public void reset() {

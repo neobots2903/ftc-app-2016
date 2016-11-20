@@ -57,6 +57,10 @@ public class TeleOp9330 extends OpMode
 {
     Hardware9330 robot9330 = new Hardware9330();
 
+    double xPower = 0;
+    double yPower = 0;
+    double spinPower = 0;
+
     final static double BBOOP_INCREMENT = 0.01;
     static final double BBMAX_POS     =  1.0;     // Maximum rotational position
     static final double BBMIN_POS     =  0.0;     // Minimum rotational position
@@ -88,6 +92,7 @@ public class TeleOp9330 extends OpMode
         robot9330.init(hardwareMap);
 
         telemetry.addData("Status", "Initialized");
+        telemetry.update();
 
         currentPos = 0.5;
         robot9330.beBoop.scaleRange(0, 1);
@@ -136,9 +141,10 @@ public class TeleOp9330 extends OpMode
         //    X  P4       P3  X
         //      X           X
         //        X       X
-        double xPower = gamepad1.left_stick_x;
-        double yPower = gamepad1.left_stick_y;
-        double spinPower = gamepad1.right_stick_x;
+
+        xPower = gamepad1.left_stick_x;
+        yPower = gamepad1.left_stick_y;
+        spinPower = gamepad1.right_stick_x;
 
         robot9330.leftFrontMotor.setPower(-yPower + xPower - spinPower);
         robot9330.rightFrontMotor.setPower(yPower + xPower - spinPower);
