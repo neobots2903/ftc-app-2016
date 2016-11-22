@@ -25,6 +25,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
+    DcMotor encoderMotor = null;
 
 
     @Override
@@ -38,16 +39,18 @@ public class AutoWithEncoder9330 extends LinearOpMode {
         Brake9330 brake = new Brake9330(hwMap);
         brake.releaseBrake();
 
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        robot9330.leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot9330.leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        encoderMotor = robot9330.bigBallPickup;
+        encoderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        encoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d",
-                robot9330.leftFrontMotor.getCurrentPosition());
+                encoderMotor.getCurrentPosition());
         telemetry.update();
 
         waitForStart();
@@ -76,11 +79,11 @@ public class AutoWithEncoder9330 extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot9330.leftFrontMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            robot9330.leftFrontMotor.setTargetPosition(newLeftTarget);
+            newLeftTarget = encoderMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            encoderMotor.setTargetPosition(newLeftTarget);
 
             // Turn On RUN_TO_POSITION
-            robot9330.leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            encoderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
@@ -92,12 +95,12 @@ public class AutoWithEncoder9330 extends LinearOpMode {
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    robot9330.leftFrontMotor.isBusy()) {
+                    encoderMotor.isBusy()) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newLeftTarget);
                 telemetry.addData("Path2",  "Running at %7d",
-                        robot9330.leftFrontMotor.getCurrentPosition());
+                        encoderMotor.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -108,7 +111,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
             robot9330.leftRearMotor.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            robot9330.leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            encoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);   // optional pause after each move
         }
