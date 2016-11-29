@@ -79,6 +79,13 @@ public class SensorMRGyroNoPID9330 extends LinearOpMode {
       sleep(50);
       idle();
     }
+      do{
+        currentHeading = gyro.getHeading();
+         if(currentHeading > 180){
+           currentHeading -= 360;
+         }
+          headingError = targetHeading - currentHeading;
+      }while(opModeIsActive());
 
     telemetry.addData(">", "Gyro Calibrated.  Press Start.");
     telemetry.update();

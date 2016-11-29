@@ -62,11 +62,11 @@ public class Hardware9330 {
         shotMotor = hwMap.dcMotor.get("motorShot");
 
 //        lineCSensor = hwMap.colorSensor.get("CSensor");
-//        BBSensor = hwMap.colorSensor.get("BBSensor");
+      BBSensor = hwMap.colorSensor.get("BBSensor");
 //        lineCSensor.setI2cAddress(I2cAddr.create7bit(0x26));
-//        BBSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
+       BBSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
 //        lineCSensor.enableLed(true);
-//        BBSensor.enableLed(true);
+      BBSensor.enableLed(true);
 //        gyro = (ModernRoboticsI2cGyro)hwMap.gyroSensor.get("gyro");
 
 
