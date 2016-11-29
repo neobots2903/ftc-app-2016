@@ -96,7 +96,7 @@ public class TeleOp9330 extends OpMode
 
         currentPos = 0.5;
         robot9330.beBoop.scaleRange(0, 1);
-        robot9330.beBoop.setPosition(.5);
+        robot9330.beBoop.setPosition(.5); //MUST BE CHANGED - Default position for beBoop is wrong
         robot9330.bigBallArmServo.setPosition(.3);
 
         brake = new Brake9330(robot9330);
