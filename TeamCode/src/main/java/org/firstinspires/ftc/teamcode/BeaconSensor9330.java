@@ -8,16 +8,15 @@ import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 
 /**
  * Created by Robot on 11/28/2016.
  */
-
+@TeleOp(name="BeaconCS", group="OpMode``")
 public class BeaconSensor9330 extends LinearOpMode {
 
-    Hardware9330 hwMap = new Hardware9330();
     ColorSensor bbcSensor;
-    ColorSensor linecSensor;
     boolean isRed;
 
     @Override
@@ -30,7 +29,7 @@ public class BeaconSensor9330 extends LinearOpMode {
         // values is a reference to the hsvValues array.
         final float values[] = hsvValues;
 
-        hwMap.init(hardwareMap);
+
 
 
         // get a reference to the RelativeLayout so we can change the background
@@ -44,12 +43,12 @@ public class BeaconSensor9330 extends LinearOpMode {
         // bLedOn represents the state of the LED.
         boolean bLedOn = false;
 
-        bbcSensor = hwMap.BBSensor;
-        linecSensor = hwMap.lineCSensor;
+        bbcSensor = hardwareMap.colorSensor.get("BBSensor");
+        bbcSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
+        bbcSensor.enableLed(true);
 
         // Set the LED in the beginning
         bbcSensor.enableLed(bLedOn);
-        linecSensor.enableLed(bLedOn);
 
         // wait for the start button to be pressed.
         waitForStart();
@@ -67,15 +66,13 @@ public class BeaconSensor9330 extends LinearOpMode {
                 // button is transitioning to a pressed state. So Toggle LED
                 bLedOn = !bLedOn;
                 bbcSensor.enableLed(bLedOn);
-                linecSensor.enableLed(bLedOn);
             }
 
             // update previous state variable.
             bPrevState = bCurrState;
 
             // convert the RGB values to HSV values.
-            Color.RGBToHSV(hwMap.BBSensor.red() * 8, hwMap.BBSensor.green() * 8, hwMap.BBSensor.blue() * 8, hsvValues);
-            Color.RGBToHSV(hwMap.lineCSensor.red() * 8, hwMap.lineCSensor.green() * 8, hwMap.lineCSensor.blue() * 8, hsvValues2);
+            Color.RGBToHSV(bbcSensor.red() * 8, bbcSensor.green() * 8, bbcSensor.blue() * 8, hsvValues);
 
             // send the info back to driver station using telemetry function.
             telemetry.addData("LED", bLedOn ? "On" : "Off");
@@ -86,14 +83,6 @@ public class BeaconSensor9330 extends LinearOpMode {
             telemetry.addData("Green", bbcSensor.green());
             telemetry.addData("Blue ", bbcSensor.blue());
             telemetry.addData("Hue", hsvValues[0]);
-
-            telemetry.addLine("----- Other Color Sensor ------");
-            telemetry.addData("C Address :", linecSensor.getI2cAddress().get7Bit());
-            telemetry.addData("Clear", linecSensor.alpha());
-            telemetry.addData("Red  ", linecSensor.red());
-            telemetry.addData("Green", linecSensor.green());
-            telemetry.addData("Blue ", linecSensor.blue());
-            telemetry.addData("Hue", hsvValues2[0]);
 
 
             // change the background color to match the color detected by the RGB sensor.
