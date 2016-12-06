@@ -35,9 +35,14 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
  //   PID9330 gyroPID;
 
+    double gyroError;
     double targetGyroPos;
     double currentGyroPos;
     double motorPower;
+    double driveSteering;
+    double driveGain;
+    double leftPower;
+    double rightPower;
 
     static double aggressiveKP = 4;
     static double aggressiveKI = 0.2;
@@ -125,24 +130,29 @@ public class ConceptMRGyro9330 extends LinearOpMode {
 
                 // see if we are getting close
                 double gap = targetGyroPos - currentGyroPos;
-//                if (abs(gap) < 10) {
-//                    if (!setConservative) {
-//                        // we're getting close to the goal
-//                        gyroPID.setTunings(conservativeKP, conservativeKI, conservativeKD);
-//                        setConservative = false;
-//                    }
-//                }
-//                else {
-//                    if (!setAggressive) {
-//                        // use aggressive values
-//                        gyroPID.setTunings(aggressiveKP, aggressiveKI, aggressiveKD);
-//                        setAggressive = false;
-//                    }
-//                }
+
+                gyroError = targetGyroPos - currentGyroPos;
+
+                driveSteering = gyroError * driveGain;
+
+                leftPower = 40 - driveSteering;
+                if (leftPower > 100) leftPower = 100;
+                if (leftPower < 0) leftPower = 0;
+
+                rightPower = 40 - driveSteering;
+                if (rightPower > 100) rightPower = 100;
+                if (rightPower < 0) rightPower = 0;
+
+                if (leftPower > rightPower){
+                    motorPower = -leftPower;
+                }
+                else {
+                    motorPower = rightPower;
+                }
 
                 // compute the power to provide to motors
   //              motorPower = gyroPID.compute(currentGyroPos);
-                if (motorPower > 0)
+                if (motorPower != 0)
                     motorPower /= 100.0;
 
                 // set motor speeds
