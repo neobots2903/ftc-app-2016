@@ -205,6 +205,7 @@ public class TeleOp9330 extends OpMode
    /*    if(gamepad2.a){
           robot9330.shotMotor.getCurrentPosition();
         }*/
+
         if (!autoShootActivated) {
             if (gamepad2.a) {
                 robot9330.shotMotor.setPower(1);

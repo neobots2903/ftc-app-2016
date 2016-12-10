@@ -59,6 +59,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 24, 5.0); // drive forward 24 inches with 5 second timeout
 
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
 

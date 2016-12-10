@@ -62,6 +62,7 @@ public class Shoot9330 {
         hwMap.shotMotor.setPower(.8);
     }
 
+
     public void stopShootWithEncoder() {
         hwMap.shotMotor.setPower(0);
         hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
