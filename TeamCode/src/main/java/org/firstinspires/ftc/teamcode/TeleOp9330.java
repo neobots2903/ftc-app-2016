@@ -176,14 +176,14 @@ public class TeleOp9330 extends OpMode
         }
 
         // pickup motor handling
-        if(gamepad2.right_bumper){
+        if(gamepad2.right_bumper && gamepad2.left_bumper) {
+            shooter.shootWithEncoder();
+        }
+        else if(gamepad2.right_bumper){
             robot9330.pickUpMotor.setPower(1);
         }
         else if(gamepad2.left_bumper){
             robot9330.pickUpMotor.setPower(-1);
-        }
-        else if(gamepad2.right_bumper && gamepad2.left_bumper) {
-            shooter.shootWithEncoder();
         }
         else{
             robot9330.pickUpMotor.setPower(0);
