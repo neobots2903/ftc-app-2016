@@ -50,21 +50,22 @@ public class Shoot9330 {
         hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void shootWithEncoder() {
+    public boolean isShootBusy() {
+        return hwMap.shotMotor.isBusy();
+    }
+    public void startShootWithEncoder() {
 
+        hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hwMap.shotMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hwMap.shotMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         hwMap.shotMotor.setTargetPosition(1440);
         hwMap.shotMotor.setPower(.8);
+    }
 
-        while(hwMap.shotMotor.isBusy()) {
-            try {
-                sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            finally {
-                hwMap.shotMotor.setPower(0);
-            }
-        }
+    public void stopShootWithEncoder() {
+        hwMap.shotMotor.setPower(0);
+        hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hwMap.shotMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 

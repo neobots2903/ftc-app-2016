@@ -78,6 +78,7 @@ public class TeleOp9330 extends OpMode
     private boolean armSet = true;
 
     Shoot9330 shooter = null;
+    private boolean autoShootActivated = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -176,11 +177,18 @@ public class TeleOp9330 extends OpMode
         }
 
         // automated shoot
-        if(gamepad2.y) {
-            robot9330.shotMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            shooter.shootWithEncoder();
+        if(gamepad2.y && !autoShootActivated) {
+            shooter.startShootWithEncoder();
+            autoShootActivated = true;
         }
 
+        // if automated shoot activated, check to see if we need to stop
+        if (autoShootActivated){
+            if (!shooter.isShootBusy()) {
+                shooter.stopShootWithEncoder();
+                autoShootActivated = false;
+            }
+        }
         // pickup motor handling
         if(gamepad2.right_bumper){
             robot9330.pickUpMotor.setPower(1);
@@ -193,17 +201,16 @@ public class TeleOp9330 extends OpMode
         }
 
         // shot motor handling
-        // run motor with encoder
+        // don't allow if autoshooting in progress
    /*    if(gamepad2.a){
           robot9330.shotMotor.getCurrentPosition();
         }*/
-        if(gamepad2.a){
-            robot9330.shotMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            robot9330.shotMotor.setPower(1);
-        }
-        else{
-            robot9330.shotMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot9330.shotMotor.setPower(0);
+        if (!autoShootActivated) {
+            if (gamepad2.a) {
+                robot9330.shotMotor.setPower(1);
+            } else {
+                robot9330.shotMotor.setPower(0);
+            }
         }
 
         if(gamepad2.dpad_down){
