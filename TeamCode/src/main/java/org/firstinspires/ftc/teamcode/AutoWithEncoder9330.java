@@ -95,7 +95,8 @@ public class AutoWithEncoder9330 extends LinearOpMode {
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    encoderMotor.isBusy()) {
+                    encoderMotor.isBusy() &&
+                    encoderMotor.getCurrentPosition() < newLeftTarget) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newLeftTarget);
