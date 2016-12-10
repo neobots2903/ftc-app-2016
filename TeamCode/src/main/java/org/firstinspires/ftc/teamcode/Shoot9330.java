@@ -53,12 +53,16 @@ public class Shoot9330 {
     public void shootWithEncoder() {
 
         hwMap.shotMotor.setTargetPosition(1440);
+        hwMap.shotMotor.setPower(.8);
 
         while(hwMap.shotMotor.isBusy()) {
             try {
                 sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            finally {
+                hwMap.shotMotor.setPower(0);
             }
         }
 

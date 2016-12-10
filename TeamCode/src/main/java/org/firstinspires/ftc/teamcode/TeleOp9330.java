@@ -154,11 +154,11 @@ public class TeleOp9330 extends OpMode
 
         // beBoop handling
         telemetry.addData("Status", "currentpos: " + currentPos);
-        if(gamepad2.x  && currentPos < BBMAX_POS){
+        if(gamepad2.dpad_left  && currentPos < BBMAX_POS){
             currentPos += BBOOP_INCREMENT;
             robot9330.beBoop.setPosition((currentPos));
         }
-        else if (gamepad2.y && currentPos > BBMIN_POS){
+        else if (gamepad2.dpad_right && currentPos > BBMIN_POS){
             currentPos -= BBOOP_INCREMENT;
             robot9330.beBoop.setPosition((currentPos));
         }
@@ -175,11 +175,14 @@ public class TeleOp9330 extends OpMode
             buttonBReleased = true;
         }
 
-        // pickup motor handling
-        if(gamepad2.right_bumper && gamepad2.left_bumper) {
+        // automated shoot
+        if(gamepad2.y) {
+            robot9330.shotMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             shooter.shootWithEncoder();
         }
-        else if(gamepad2.right_bumper){
+
+        // pickup motor handling
+        if(gamepad2.right_bumper){
             robot9330.pickUpMotor.setPower(1);
         }
         else if(gamepad2.left_bumper){
@@ -195,9 +198,11 @@ public class TeleOp9330 extends OpMode
           robot9330.shotMotor.getCurrentPosition();
         }*/
         if(gamepad2.a){
+            robot9330.shotMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot9330.shotMotor.setPower(1);
         }
         else{
+            robot9330.shotMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot9330.shotMotor.setPower(0);
         }
 
