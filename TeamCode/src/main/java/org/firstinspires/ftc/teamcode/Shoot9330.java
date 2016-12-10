@@ -30,6 +30,7 @@ public class Shoot9330 {
         //Wait for start
        // waitForStart();
         if (hwMap != null) {
+            /*
             //Set the power to max
             hwMap.shotMotor.setPower(1);
             //Wait 1 second
@@ -40,6 +41,7 @@ public class Shoot9330 {
             sleep(1000);
             //Stop the motor
             hwMap.shotMotor.setPower(0);
+            */
         }
 
     }
