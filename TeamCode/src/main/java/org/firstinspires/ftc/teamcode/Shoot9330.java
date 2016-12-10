@@ -23,6 +23,8 @@ public class Shoot9330 {
         //Set the direction of the shootig motor
         hwMap = robotMap;
         hwMap.shotMotor.setDirection(DcMotor.Direction.REVERSE);
+        hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hwMap.shotMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     //Shoot function
@@ -30,7 +32,6 @@ public class Shoot9330 {
         //Wait for start
        // waitForStart();
         if (hwMap != null) {
-            /*
             //Set the power to max
             hwMap.shotMotor.setPower(1);
             //Wait 1 second
@@ -41,7 +42,24 @@ public class Shoot9330 {
             sleep(1000);
             //Stop the motor
             hwMap.shotMotor.setPower(0);
-            */
+        }
+
+    }
+
+    public void shootEncoderReset() {
+        hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void shootWithEncoder() {
+
+        hwMap.shotMotor.setTargetPosition(1440);
+
+        while(hwMap.shotMotor.isBusy()) {
+            try {
+                sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }
