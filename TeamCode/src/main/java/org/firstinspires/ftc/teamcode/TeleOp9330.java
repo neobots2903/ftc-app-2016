@@ -201,7 +201,7 @@ public class TeleOp9330 extends OpMode
             robot9330.bigBallPickup.setPower(-1);
         }
         else if(gamepad2.dpad_up){
-            robot9330.bigBallPickup.setPower(1);
+            robot9330.bigBallPickup.setPower(-1);
         }
         else{
             robot9330.bigBallPickup.setPower(0);
