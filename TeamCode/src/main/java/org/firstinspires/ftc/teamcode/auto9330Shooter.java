@@ -22,7 +22,7 @@ public class auto9330Shooter extends LinearOpMode {
         Brake9330 brake = new Brake9330(robot9330);
         brake.releaseBrake();
 
-        wait(10000);
+        sleep(10000);
         ds.drive(1000);
 
         shooter.shoot();

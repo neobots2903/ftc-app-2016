@@ -63,15 +63,17 @@ public class drive9330{
             set motor speed to 0
         end if
         */
-        if (time > 0){
-            motorSpeed = 1;
-            targetTime = currentTimeMillis() + time;
-            moveForward(motorSpeed);
-            while (currentTimeMillis() <= targetTime){
-                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
-            }
-            moveForward(0);
-        }
+
+        drive(time, 1);
+//        if (time > 0){
+//            motorSpeed = 1;
+//            targetTime = currentTimeMillis() + time;
+//            moveForward(motorSpeed);
+//            while (currentTimeMillis() <= targetTime){
+//                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+//            }
+//            moveForward(0);
+//        }
         //Typed out your pseudocode
 
 // Loop above should work -- need to update values.

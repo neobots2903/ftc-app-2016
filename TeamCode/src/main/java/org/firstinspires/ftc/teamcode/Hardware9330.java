@@ -71,7 +71,7 @@ public class Hardware9330 {
 
 
         brake.setDirection(Servo.Direction.REVERSE);
-        bigBallArmServo.setPosition(0);
+        //bigBallArmServo.setPosition(0);
 
     }
 

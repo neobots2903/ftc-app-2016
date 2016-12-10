@@ -177,18 +177,18 @@ public class TeleOp9330 extends OpMode
         }
 
         // automated shoot
-        if(gamepad2.y && !autoShootActivated) {
-            shooter.startShootWithEncoder();
-            autoShootActivated = true;
-        }
-
-        // if automated shoot activated, check to see if we need to stop
-        if (autoShootActivated){
-            if (!shooter.isShootBusy()) {
-                shooter.stopShootWithEncoder();
-                autoShootActivated = false;
-            }
-        }
+//        if(gamepad2.y && !autoShootActivated) {
+//            shooter.startShootWithEncoder();
+//            autoShootActivated = true;
+//        }
+//
+//        // if automated shoot activated, check to see if we need to stop
+//        if (autoShootActivated){
+//            if (!shooter.isShootBusy()) {
+//                shooter.stopShootWithEncoder();
+//                autoShootActivated = false;
+//            }
+//        }
         // pickup motor handling
         if(gamepad2.right_bumper){
             robot9330.pickUpMotor.setPower(1);
@@ -231,7 +231,7 @@ public class TeleOp9330 extends OpMode
                 armSet = false;
             }
             else {
-                robot9330.bigBallArmServo.setPosition(.2);
+                //robot9330.bigBallArmServo.setPosition(.2);
                 armSet = true;
             }
         }

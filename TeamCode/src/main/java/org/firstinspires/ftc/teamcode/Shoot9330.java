@@ -23,8 +23,8 @@ public class Shoot9330 {
         //Set the direction of the shootig motor
         hwMap = robotMap;
         hwMap.shotMotor.setDirection(DcMotor.Direction.REVERSE);
-        hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hwMap.shotMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hwMap.shotMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     //Shoot function
@@ -37,7 +37,7 @@ public class Shoot9330 {
             //Wait 1 second
             sleep(1000);
             //Set the power to reverse, max
-            hwMap.shotMotor.setPower(-1);
+//            hwMap.shotMotor.setPower(-1);
             //Wait 1 second
             sleep(1000);
             //Stop the motor
@@ -51,6 +51,7 @@ public class Shoot9330 {
     }
 
     public boolean isShootBusy() {
+        //return hwMap.shotMotor.getCurrentPosition() < 1440;
         return hwMap.shotMotor.isBusy();
     }
     public void startShootWithEncoder() {
