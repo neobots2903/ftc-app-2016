@@ -41,7 +41,7 @@ public class BeaconSensor9330 extends LinearOpMode {
         boolean bCurrState = false;
 
         // bLedOn represents the state of the LED.
-        boolean bLedOn = false;
+        boolean bLedOn = true;
 
         bbcSensor = hardwareMap.colorSensor.get("BBSensor");
         bbcSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
