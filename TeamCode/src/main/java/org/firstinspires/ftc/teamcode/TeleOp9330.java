@@ -75,6 +75,7 @@ public class TeleOp9330 extends OpMode
     Brake9330 brake = null;
     private long lastBrakeChange;
     private boolean buttonBReleased = true;
+    private boolean armSet = true;
 
     Shoot9330 shooter = null;
 
@@ -207,7 +208,7 @@ public class TeleOp9330 extends OpMode
             robot9330.bigBallPickup.setPower(0);
         }
 
-        boolean armSet = true;
+
         if(gamepad2.b && gamepad2.x){
             if (armSet == true) {
                 robot9330.bigBallArmServo.setPosition(1);
