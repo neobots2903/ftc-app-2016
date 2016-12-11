@@ -79,10 +79,6 @@ public class SensorMRColor9330 extends LinearOpMode {
         // color of the Robot Controller app to match the hue detected by the RGB sensor.
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(R.id.RelativeLayout);
 
-        // bPrevState and bCurrState represent the previous and current state of the button.
-        boolean bPrevState = false;
-        boolean bCurrState = false;
-
         // bLedOn represents the state of the LED.
         boolean bLedOn = true;
 
@@ -100,20 +96,13 @@ public class SensorMRColor9330 extends LinearOpMode {
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
 
-            // check the status of the x button on either gamepad.
-            bCurrState = gamepad1.x;
-
             // check for button state transitions.
-            if ((bCurrState == true) && (bCurrState != bPrevState)) {
-
+            if (gamepad1.x) {
                 // button is transitioning to a pressed state. So Toggle LED
                 bLedOn = !bLedOn;
                 bbcSensor.enableLed(bLedOn);
                 linecSensor.enableLed(bLedOn);
             }
-
-            // update previous state variable.
-            bPrevState = bCurrState;
 
             // convert the RGB values to HSV values.
             Color.RGBToHSV(hwMap.BBSensor.red() * 8, hwMap.BBSensor.green() * 8, hwMap.BBSensor.blue() * 8, hsvValues);

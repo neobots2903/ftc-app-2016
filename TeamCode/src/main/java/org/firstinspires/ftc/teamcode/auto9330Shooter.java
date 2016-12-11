@@ -20,16 +20,20 @@ public class auto9330Shooter extends LinearOpMode {
         robot9330.init(hardwareMap);
         shooter = new Shoot9330(robot9330);
 
-       ds.init(robot9330);
+       ds.init(robot9330, true);
        Brake9330 brake = new Brake9330(robot9330);
         brake.releaseBrake();
 
         sleep(10000);
         ds.driveDiagonalLeft(1000, 1);
 
+        ds.turn(90, .5f, 3);
+        ds.turn(-180, .5f, 3);
+
         shooter.shoot();
 
-        ds.drive(750);
+        // drive straight 24 inches
+        ds.driveDistance(24, 1);
     }
 
 

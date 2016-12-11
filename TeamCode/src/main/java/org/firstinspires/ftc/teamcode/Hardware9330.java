@@ -67,7 +67,7 @@ public class Hardware9330 {
        BBSensor.setI2cAddress(I2cAddr.create7bit(0x1E));
 //        lineCSensor.enableLed(true);
       BBSensor.enableLed(true);
-//        gyro = (ModernRoboticsI2cGyro)hwMap.gyroSensor.get("gyro");
+      gyro = (ModernRoboticsI2cGyro)hwMap.gyroSensor.get("gyro");
 
 
         brake.setDirection(Servo.Direction.REVERSE);
