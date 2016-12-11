@@ -130,6 +130,32 @@ public class drive9330{
 //        }
     }
 
+    public void driveDiagonalLeft(int time, float newSpeed) {
+
+        if(time > 0){
+            motorSpeed = newSpeed;
+            targetTime = currentTimeMillis() + time;
+            moveDiagonalLeft(motorSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveDiagonalLeft(0);
+        }
+    }
+
+    public void driveDiagonalRight(int time, float newSpeed) {
+
+        if(time > 0){
+            motorSpeed = newSpeed;
+            targetTime = currentTimeMillis() + time;
+            moveDiagonalRight(motorSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveDiagonalRight(0);
+        }
+    }
+
 
     public void moveForward(float speed){
 
@@ -137,6 +163,20 @@ public class drive9330{
         robot9330.rightFrontMotor.setPower(-speed);
         robot9330.rightRearMotor.setPower(-speed);
         robot9330.leftRearMotor.setPower(speed);
+    }
+
+    public void moveDiagonalRight(float speed) {
+
+        robot9330.leftFrontMotor.setPower(speed);
+        robot9330.rightRearMotor.setPower(-speed);
+
+    }
+
+    public void moveDiagonalLeft(float speed) {
+
+        robot9330.rightFrontMotor.setPower(-speed);
+        robot9330.leftRearMotor.setPower(speed);
+
     }
 
     public void turnTable (float speed){
