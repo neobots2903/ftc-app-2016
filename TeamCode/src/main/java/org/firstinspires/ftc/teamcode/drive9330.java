@@ -166,13 +166,13 @@ public class drive9330{
     // set the drive train to a specific speed
     public void driveDiagonalLeft(float speed)
     {
-        moveDiagonalLeft(speed);
+        moveDiagonalLeft(speed, speed);
     }
 
     // set the drive train to a specific speed
     public void driveDiagonalRight(float speed)
     {
-        moveDiagonalRight(speed);
+        moveDiagonalRight(speed, speed);
     }
 
 
@@ -181,11 +181,11 @@ public class drive9330{
         if(time > 0){
             motorSpeed = newSpeed;
             targetTime = currentTimeMillis() + time;
-            moveDiagonalLeft(motorSpeed);
+            moveDiagonalLeft(motorSpeed, motorSpeed);
             while(currentTimeMillis() <= targetTime){
                 System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
             }
-            moveDiagonalLeft(0);
+            moveDiagonalLeft(0, 0);
         }
     }
 
@@ -194,12 +194,90 @@ public class drive9330{
         if(time > 0){
             motorSpeed = newSpeed;
             targetTime = currentTimeMillis() + time;
-            moveDiagonalRight(motorSpeed);
+            moveDiagonalRight(motorSpeed, motorSpeed);
             while(currentTimeMillis() <= targetTime){
                 System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
             }
-            moveDiagonalRight(0);
+            moveDiagonalRight(0, 0);
         }
+    }
+
+    public void driveDiagonalLeftDistance(int distanceInches, float newSpeed) {
+
+        int newLeftTarget;
+
+        int zAccumulated;  //Total rotation left/right
+        int target = 0;  //Desired angle to turn to
+        float leftSpeed = newSpeed;
+        float rightSpeed = -newSpeed;
+
+        if (distanceInches > 0) {
+
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = encoderMotor.getCurrentPosition() + (int) (distanceInches * COUNTS_PER_INCH);
+            encoderMotor.setTargetPosition(newLeftTarget);
+
+            // Turn On RUN_TO_POSITION
+            encoderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            if (gyroInitialized) {
+                target = gyro.getIntegratedZValue();  //Starting direction
+            }
+
+            motorSpeed = newSpeed;
+            while (encoderMotor.getTargetPosition() < newLeftTarget) {
+                if (gyroInitialized) {
+                    zAccumulated = gyro.getIntegratedZValue();
+                    leftSpeed = newSpeed + ((zAccumulated - target) / 100);
+                    rightSpeed = newSpeed - ((zAccumulated - target) / 100);
+
+                    leftSpeed = Range.clip(leftSpeed, -1, 1);
+                    rightSpeed = Range.clip(rightSpeed, -1, 1);
+                }
+                moveDiagonalLeft(leftSpeed, rightSpeed);
+            }
+            moveDiagonalLeft(0, 0);
+        }
+
+    }
+
+    public void driveDiagonalRightDistance(int distanceInches, float newSpeed) {
+
+        int newLeftTarget;
+
+        int zAccumulated;  //Total rotation left/right
+        int target = 0;  //Desired angle to turn to
+        float leftSpeed = newSpeed;
+        float rightSpeed = -newSpeed;
+
+        if (distanceInches > 0) {
+
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = encoderMotor.getCurrentPosition() + (int) (distanceInches * COUNTS_PER_INCH);
+            encoderMotor.setTargetPosition(newLeftTarget);
+
+            // Turn On RUN_TO_POSITION
+            encoderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            if (gyroInitialized) {
+                target = gyro.getIntegratedZValue();  //Starting direction
+            }
+
+            motorSpeed = newSpeed;
+            while (encoderMotor.getTargetPosition() < newLeftTarget) {
+                if (gyroInitialized) {
+                    zAccumulated = gyro.getIntegratedZValue();
+                    leftSpeed = newSpeed + ((zAccumulated - target) / 100);
+                    rightSpeed = newSpeed - ((zAccumulated - target) / 100);
+
+                    leftSpeed = Range.clip(leftSpeed, -1, 1);
+                    rightSpeed = Range.clip(rightSpeed, -1, 1);
+                }
+                moveDiagonalRight(leftSpeed, rightSpeed);
+            }
+            moveDiagonalRight(0, 0);
+        }
+
     }
 
 
@@ -211,17 +289,17 @@ public class drive9330{
         robot9330.leftRearMotor.setPower(leftSpeed);
     }
 
-    public void moveDiagonalRight(float speed) {
+    public void moveDiagonalRight(float leftSpeed, float rightSpeed) {
 
-        robot9330.leftFrontMotor.setPower(speed);
-        robot9330.rightRearMotor.setPower(-speed);
+        robot9330.leftFrontMotor.setPower(leftSpeed);
+        robot9330.rightRearMotor.setPower(-rightSpeed);
 
     }
 
-    public void moveDiagonalLeft(float speed) {
+    public void moveDiagonalLeft(float leftSpeed, float rightSpeed) {
 
-        robot9330.rightFrontMotor.setPower(-speed);
-        robot9330.leftRearMotor.setPower(speed);
+        robot9330.rightFrontMotor.setPower(-rightSpeed);
+        robot9330.leftRearMotor.setPower(leftSpeed);
 
     }
 
