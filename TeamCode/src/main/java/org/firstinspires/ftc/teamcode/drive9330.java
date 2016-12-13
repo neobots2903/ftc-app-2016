@@ -100,22 +100,17 @@ public class drive9330{
         int zAccumulated;  //Total rotation left/right
         int target = 0;  //Desired angle to turn to
         float leftSpeed = newSpeed;
-        float rightSpeed = -newSpeed;
+        float rightSpeed = newSpeed;
 
         if(distance > 0){
 
             // Determine new target position, and pass to motor controller
             newLeftTarget = encoderMotor.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
-            encoderMotor.setTargetPosition(newLeftTarget);
-
-            // Turn On RUN_TO_POSITION
-            encoderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             if (gyroInitialized) {
                 target = gyro.getIntegratedZValue();  //Starting direction
             }
 
-            motorSpeed = newSpeed;
             moveForward(leftSpeed, rightSpeed);
             while(encoderMotor.getTargetPosition() < newLeftTarget){
                 if (gyroInitialized) {
@@ -216,10 +211,6 @@ public class drive9330{
 
             // Determine new target position, and pass to motor controller
             newLeftTarget = encoderMotor.getCurrentPosition() + (int) (distanceInches * COUNTS_PER_INCH);
-            encoderMotor.setTargetPosition(newLeftTarget);
-
-            // Turn On RUN_TO_POSITION
-            encoderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             if (gyroInitialized) {
                 target = gyro.getIntegratedZValue();  //Starting direction
@@ -255,10 +246,6 @@ public class drive9330{
 
             // Determine new target position, and pass to motor controller
             newLeftTarget = encoderMotor.getCurrentPosition() + (int) (distanceInches * COUNTS_PER_INCH);
-            encoderMotor.setTargetPosition(newLeftTarget);
-
-            // Turn On RUN_TO_POSITION
-            encoderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             if (gyroInitialized) {
                 target = gyro.getIntegratedZValue();  //Starting direction
