@@ -27,12 +27,15 @@ public class Auto9330 extends LinearOpMode {
         // ds.reset();
         // ds.setTime(100);
         robot9330.init(hardwareMap);
-        ds.init(robot9330);
+        ds.init(robot9330, true);
         Brake9330 brake = new Brake9330(robot9330);
         brake.releaseBrake();
 
         wait(10000);
-        ds.drive(1500);
+        ds.driveDistance(24, 0.8f);
+        ds.turn(90, 0.8f, 3);
+        ds.driveDistance(12, 0.8f);
+        ds.driveDiagonalLeftDistance(12, 0.8f);
 
         // this is not needed -- drive(1500) should stop the motors when finished
         // ds.drive();
