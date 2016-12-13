@@ -26,19 +26,32 @@ public class Auto9330 extends LinearOpMode {
         // until completed.
         // ds.reset();
         // ds.setTime(100);
+
         robot9330.init(hardwareMap);
-        ds.init(robot9330, true);
+        ds.init(robot9330, false);
         Brake9330 brake = new Brake9330(robot9330);
         brake.releaseBrake();
 
-        wait(10000);
+        telemetry.addLine("Waiting for start");
+        telemetry.update();
+        waitForStart();
+
+        //wait(10000);
+        telemetry.addLine("driving");
+        telemetry.update();
         ds.driveDistance(24, 0.8f);
+        telemetry.addLine("turning");
+        telemetry.update();
         ds.turn(90, 0.8f, 3);
-        ds.driveDistance(12, 0.8f);
-        ds.driveDiagonalLeftDistance(12, 0.8f);
+        //ds.driveDistance(12, 0.8f);
+        //ds.driveDiagonalLeftDistance(12, 0.8f);
 
         // this is not needed -- drive(1500) should stop the motors when finished
         // ds.drive();
+        telemetry.addLine("done");
+        telemetry.update();
+
+        sleep(1000);
     }
 
   /*    @Override

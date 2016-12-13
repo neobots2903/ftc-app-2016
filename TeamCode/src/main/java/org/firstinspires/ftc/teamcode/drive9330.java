@@ -116,6 +116,7 @@ public class drive9330{
             }
 
             motorSpeed = newSpeed;
+            moveForward(leftSpeed, rightSpeed);
             while(encoderMotor.getTargetPosition() < newLeftTarget){
                 if (gyroInitialized) {
                     zAccumulated = gyro.getIntegratedZValue();
@@ -124,8 +125,8 @@ public class drive9330{
 
                     leftSpeed = Range.clip(leftSpeed, -1, 1);
                     rightSpeed = Range.clip(rightSpeed, -1, 1);
+                    moveForward(leftSpeed, rightSpeed);
                 }
-                moveForward(leftSpeed, rightSpeed);
             }
             moveForward(0,0);
         }
