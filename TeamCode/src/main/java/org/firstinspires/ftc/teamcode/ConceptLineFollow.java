@@ -67,7 +67,7 @@ public class ConceptLineFollow extends LinearOpMode {
               |   R   |   |   |/  |   |
              4+-+R+-+-+-+-+-+-/-+-+-+-+  When it reaches here, it begins to move forward
               |   |   |   |  /|   |   |  until it discovers the line.  Where it rotates
-             5KLLLL   + +---+ +   +   +  90 degres to the right and moves forward
+             5KLLLL   + +---+ +   +   +  90 degrees to the right and moves forward
               |   |   | |***| |   |   |  18 inches.  Then detects the color and determines
              6+-+-+-+-+-|***|-+-+-+-+-+  if the beacon(K) needs to be activated.
               |   |   | |***| |   |   |
