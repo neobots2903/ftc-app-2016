@@ -12,7 +12,8 @@ public class auto9330Shooter extends LinearOpMode {
 
     Hardware9330 robot9330 = new Hardware9330();
     private ElapsedTime runtime = new ElapsedTime();
-    drive9330 ds = new drive9330();
+    drive9330 ds = null;
+    Brake9330 brake = null;
     Shoot9330 shooter ;
 
     @Override
@@ -20,8 +21,12 @@ public class auto9330Shooter extends LinearOpMode {
         robot9330.init(hardwareMap);
         shooter = new Shoot9330(robot9330);
 
-       ds.init(robot9330, true);
-       Brake9330 brake = new Brake9330(robot9330);
+        // instantiate and initialize drive subsystem
+        ds = new drive9330(robot9330);
+        ds.init(true);
+
+        // instantiate and initialize brake subsystem
+        brake = new Brake9330(robot9330);
         brake.releaseBrake();
 
         sleep(10000);

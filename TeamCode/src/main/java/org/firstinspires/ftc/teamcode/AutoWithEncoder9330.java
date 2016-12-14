@@ -15,7 +15,8 @@ public class AutoWithEncoder9330 extends LinearOpMode {
 
     Hardware9330 robot9330 = new Hardware9330();
     private ElapsedTime runtime = new ElapsedTime();
-    drive9330 ds = new drive9330();
+    drive9330 ds = null;
+    Brake9330 brake = null;
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -30,10 +31,15 @@ public class AutoWithEncoder9330 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         robot9330.init(hardwareMap);
-        ds.init(robot9330);
+
+        // instantiate and initialize drive subsystem
+        ds = new drive9330(robot9330);
+        ds.init(false);
         ds.reset();
         ds.setTime(100);
-        Brake9330 brake = new Brake9330(robot9330);
+
+        // instantiate and initialize brake subsystem
+        brake = new Brake9330(robot9330);
         brake.releaseBrake();
 
 

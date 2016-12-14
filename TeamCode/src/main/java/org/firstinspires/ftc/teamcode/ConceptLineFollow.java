@@ -43,11 +43,21 @@ public class ConceptLineFollow extends LinearOpMode {
     double rightPower;
 
     drive9330 ds;
+    Brake9330 brake;
 
     @Override
     public void runOpMode() {
 
         hwMap.init(hardwareMap);
+
+        // instantiate and initialize drive subsystem
+        ds = new drive9330(hwMap);
+        ds.init(true);
+
+        // instantiate and initialize brake subsystem
+        brake = new Brake9330(hwMap);
+        brake.releaseBrake();
+
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to test gyro." );

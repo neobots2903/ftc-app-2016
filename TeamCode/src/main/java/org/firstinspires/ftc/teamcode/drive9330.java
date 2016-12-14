@@ -48,13 +48,15 @@ public class drive9330{
     static final double     TURN_SPEED              = 0.5;
     DcMotor encoderMotor = null;
 
-    public void init (Hardware9330 robotmap) {
-        init(robotmap, false);
+    public drive9330(Hardware9330 robotmap) {
+        robot9330 = robotmap;
     }
 
-    public void init(Hardware9330 robotmap, boolean initGyro) {
+    public void init () {
+        init(false);
+    }
 
-        robot9330 = robotmap;
+    public void init(boolean initGyro) {
 
         // only initialize the gyro if requested to do
         gyroInitialized = initGyro;

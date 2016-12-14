@@ -16,8 +16,8 @@ public class Auto9330 extends LinearOpMode {
 
     Hardware9330 robot9330 = new Hardware9330();
     private ElapsedTime runtime = new ElapsedTime();
-    drive9330 ds = new drive9330();
-
+    drive9330 ds = null;
+    Brake9330 brake = null;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -28,7 +28,12 @@ public class Auto9330 extends LinearOpMode {
         // ds.setTime(100);
 
         robot9330.init(hardwareMap);
-        ds.init(robot9330, false);
+
+        // create drive subsystem
+        ds = new drive9330(robot9330);
+        ds.init(false);
+
+        // create break subsystem
         Brake9330 brake = new Brake9330(robot9330);
         brake.releaseBrake();
 
