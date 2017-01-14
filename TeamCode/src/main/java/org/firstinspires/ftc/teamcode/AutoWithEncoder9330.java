@@ -61,7 +61,8 @@ public class AutoWithEncoder9330 extends LinearOpMode {
         waitOneFullHardwareCycle();
         sleep(10000);
 
-        encoderDrive(DRIVE_SPEED, 36, 5.0); // drive forward 24 inches with 5 second timeout
+        encoderDrive(DRIVE_SPEED, -36, 5.0); // drive forward 36 inches with 5 second timeout
+                                             //(destination inches must be negative; I know, it's backwards :P)
 
 
         telemetry.addData("Path", "Complete");
@@ -95,15 +96,15 @@ public class AutoWithEncoder9330 extends LinearOpMode {
             // reset the timeout time and start motion.
             runtime.reset();
             robot9330.leftFrontMotor.setPower(speed);
-            robot9330.rightFrontMotor.setPower(-speed); //Something is wrong with how this is set up, as the robot turns while driving
-            robot9330.rightRearMotor.setPower(-speed);  //CHANGE THESE! (Maybe)
+            robot9330.rightFrontMotor.setPower(-speed);
+            robot9330.rightRearMotor.setPower(-speed);
             robot9330.leftRearMotor.setPower(speed);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     encoderMotor.isBusy() &&
-                    encoderMotor.getCurrentPosition() < newLeftTarget) {
+                    encoderMotor.getCurrentPosition() > newLeftTarget) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newLeftTarget);
