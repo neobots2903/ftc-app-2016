@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -17,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Created by John on 11/1/2016.  Thank you to team 6150!
  */
 
-public class VuforiaTest extends LinearOpMode {
+public class Vuforia9330 {
 
     // Variables to be used for later
     VuforiaLocalizer vuforiaLocalizer;
@@ -30,20 +31,16 @@ public class VuforiaTest extends LinearOpMode {
 
     public static final String VUFORIA_KEY = "AX2kqHH/////AAAAGTBSjEsQrELpg6LxE4wo/DNOjsPTB7/AFGloN/Z9A9RdVJM4UsJ4czaCR0J/UHwB24f8qcJd+hUP486zHfXkiY2qc3KvNd9DcPmEZytopYZQ0tSLQXwnJJs3ntyqDYeZBv/cmZCLE9WNqRHslYMv3LRMJt7gmq2EsIKs5B8fW5Su9+2S4M7msEDAjEQygfuagPWXRbJHD098VfQujTp0BhG9M22INbcVnlfrZzfD8+/dstf4AfaYdKokkGyIEh3Cygw3jEhZau+X1gghaRSlzE+nzyfSkR1ARbxuf6jzKRdw5hg5e5IjQ4n+MJfl7uuRvnrvvUncG56OKcUm+WuUoJuetZtR4dKrn1Nr82ccT56H"; //Key used for Vuforia.
 
-    public void runOpMode() throws InterruptedException
+    public void init()
     {
-        setupVuforia();
-
         // We don't know where the robot is, so set it to the origin
         // If we don't include this, it would be null, which would cause errors later on
         lastKnownLocation = createMatrix(0, 0, 0, 0, 0, 0);
 
-        waitForStart();
-
         // Start tracking the targets
         visionTargets.activate();
 
-        while(opModeIsActive())
+/*        while(opModeIsActive())
         {
             // Ask the listener for the latest information on where the robot is
             if (wheelsListener.isVisible()) {
@@ -103,7 +100,7 @@ public class VuforiaTest extends LinearOpMode {
             telemetry.update();
             telemetry.addData( "X:"+ convertInToMM(getXLocation(lastKnownLocation)) +"  Y:" +  convertInToMM(getYLocation(lastKnownLocation)), 00);
             idle();
-        }
+        } */
     }
 
     public void setupVuforia()

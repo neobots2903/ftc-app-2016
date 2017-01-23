@@ -17,6 +17,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     drive9330 ds = null;
     Brake9330 brake = null;
+    Shoot9330 shooter ;
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -31,6 +32,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         robot9330.init(hardwareMap);
+        shooter = new Shoot9330(robot9330);
 
         // instantiate and initialize drive subsystem
         ds = new drive9330(robot9330);
@@ -60,7 +62,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
 
         waitOneFullHardwareCycle();
         sleep(10000);
-
+        shooter.shoot();
         encoderDrive(DRIVE_SPEED, -36, 5.0); // drive forward 36 inches with 5 second timeout
                                              //(destination inches must be negative; I know, it's backwards :P)
 
