@@ -26,10 +26,10 @@ public class Auto9330Vuforia extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
-    static final double     MAX_LEFT                = 72;
-    static final double     MAX_RIGHT               = 80;
-    static final double     CENTER_ANGLE            = 77;
-    static final double     CLOSEST_DISTANCE        = 15;
+    static final double     MAX_LEFT                = 75;
+    static final double     MAX_RIGHT               = 79;
+    static final double     CENTER_ANGLE            = 77.5;
+    static final double     CLOSEST_DISTANCE        = 10;
 
     DcMotor encoderMotor = null;
     OpenGLMatrix latestLocation;
@@ -126,16 +126,18 @@ public class Auto9330Vuforia extends LinearOpMode {
                 // Send information about whether the target is visible, and where the robot is
                 telemetry.addData("no targets in sight", null);
                 if (y > CLOSEST_DISTANCE) {
-                    if (CENTER_ANGLE > x) {
-                        ds.turn(2, 0.5f, 2);
-                    } else if (CENTER_ANGLE < x) {
-                        ds.turn(-2, 0.5f, 2);
+                    telemetry.addData("Met goal", null);
+                    if (CENTER_ANGLE < x) {
+                        telemetry.addData("can't find, turning right", null);
+                        ds.turnWithoutGyro(1, 0.2, false);
                     } else {
-                        ds.turn(-5, 0.5f, 2);
-                        turnDirection = !turnDirection;
+                        telemetry.addData("can't find, turning left", null);
+                        ds.turnWithoutGyro(1, 0.2, true);
                     }
+                } else {
+                    telemetry.addData("Can't find target, met distance goal", null);
+                    ds.drive(0f);
                 }
-                ds.drive(0f);
             }
             telemetry.update();
             telemetry.addData( "X:"+ vuforia.convertInToMM(vuforia.getXLocation(vuforia.lastKnownLocation)) +"  Y:" +
@@ -163,62 +165,17 @@ public class Auto9330Vuforia extends LinearOpMode {
      */
     public void drivetoTarget() {
         if (y > CLOSEST_DISTANCE) {
+            telemetry.addData("have not yet met goal", null);
             if (MAX_LEFT >= x) {
-                ds.turn(2, 0.5f, 2);
+                telemetry.addData("have not yet met goal, turning left", null);
+                ds.driveDiagonalLeft(100,1);
             } else if (MAX_RIGHT <= x) {
-                ds.turn(-2, 0.5f, 2);
+                telemetry.addData("have not yet met goal, turning right", null);
+                ds.driveDiagonalRight(100,1);
             } else {
+                telemetry.addData("have not yet met goal, continue straight", null);
                 ds.drive(0.4f);
             }
-        }
-    }
-
-    public void encoderDrive(double speed,
-                             double leftInches,
-                             double timeoutS) {
-        int newLeftTarget;
-
-
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            newLeftTarget = encoderMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            encoderMotor.setTargetPosition(newLeftTarget);
-
-            // Turn On RUN_TO_POSITION
-            encoderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            robot9330.leftFrontMotor.setPower(speed);
-            robot9330.rightFrontMotor.setPower(-speed);
-            robot9330.rightRearMotor.setPower(-speed);
-            robot9330.leftRearMotor.setPower(speed);
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    encoderMotor.isBusy() &&
-                    encoderMotor.getCurrentPosition() > newLeftTarget) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d", newLeftTarget);
-                telemetry.addData("Path2",  "Running at %7d",
-                        encoderMotor.getCurrentPosition());
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            robot9330.leftFrontMotor.setPower(0);
-            robot9330.rightFrontMotor.setPower(0);
-            robot9330.rightRearMotor.setPower(0);
-            robot9330.leftRearMotor.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            encoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //  sleep(250);   // optional pause after each move
         }
     }
 

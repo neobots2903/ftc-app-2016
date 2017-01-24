@@ -293,6 +293,36 @@ public class drive9330{
 
     }
 
+    public void turnWithoutGyro(int time, double newSpeed, boolean left) {
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            if (left){
+                turnLeft(newSpeed, newSpeed);
+            } else {
+                turnRight(newSpeed, newSpeed);
+            }
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveDiagonalLeft(0, 0);
+        }
+    }
+
+    public void turnLeft(double leftSpeed, double rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(leftSpeed);
+        robot9330.rightFrontMotor.setPower(rightSpeed);
+        robot9330.rightRearMotor.setPower(rightSpeed);
+        robot9330.leftRearMotor.setPower(leftSpeed);
+    }
+
+    public void turnRight(double leftSpeed, double rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(-leftSpeed);
+        robot9330.rightFrontMotor.setPower(-rightSpeed);
+        robot9330.rightRearMotor.setPower(-rightSpeed);
+        robot9330.leftRearMotor.setPower(-leftSpeed);
+    }
     // keep speed low for more accurate angles.
     // for turning left, make targetAngle negative and for right, make it positive
     public void turn(int targetAngle, float speed, int error) {
