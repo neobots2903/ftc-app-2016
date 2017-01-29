@@ -46,6 +46,7 @@ public class drive9330{
             (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
+    double currentGyroPos;
     DcMotor encoderMotor = null;
 
     public drive9330(Hardware9330 robotmap) {
@@ -325,31 +326,31 @@ public class drive9330{
     }
     // keep speed low for more accurate angles.
     // for turning left, make targetAngle negative and for right, make it positive
-    public void turn(int targetAngle, float speed, int error) {
+    public void turn(int targetAngle, double speed, int error) {
 
-        if (gyroInitialized) {
-            zAccumulated = gyro.getIntegratedZValue();  //Set variables to gyro readings
-        }
+       // if (gyroInitialized) {
+       //     zAccumulated = gyro.getIntegratedZValue();  //Set variables to gyro readings
+       // }
 
         //Continue while the robot direction is further than three degrees from the target
-        while (Math.abs(zAccumulated - target) > error) {
+        while (Math.abs(currentGyroPos) - targetAngle > error) {
             //if gyro is positive, we will turn right
-            if (zAccumulated > target) {
-                turnTable(-speed);
+            if (currentGyroPos > targetAngle) {
+                turnTable(speed);
             }
             //if gyro is positive, we will turn left
-            if (zAccumulated < target) {
-                turnTable(speed);
+            if (currentGyroPos < targetAngle) {
+                turnTable(-speed);
             }
 
             //Set variables to gyro readings
-            zAccumulated = gyro.getIntegratedZValue();
+            //zAccumulated = gyro.getIntegratedZValue();
         }
 
         turnTable(0);
     }
 
-    public void turnTable (float speed){
+    public void turnTable (double speed){
 
         robot9330.leftFrontMotor.setPower(speed);
         robot9330.rightFrontMotor.setPower(speed);
