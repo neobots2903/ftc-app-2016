@@ -39,7 +39,7 @@ public class Auto9330Vuforia extends LinearOpMode {
     OpenGLMatrix latestLocation;
     double x;
     double y;
-    double currentGyroPos;
+    int angleZ;
     boolean gyroInitialized = false;
     boolean foundTarget = false;
     boolean firstBeaconComplete = false;
@@ -55,8 +55,7 @@ public class Auto9330Vuforia extends LinearOpMode {
         shooter = new Shoot9330(robot9330);
         vuforia.setupVuforia();
         gyro = (ModernRoboticsI2cGyro)hardwareMap.get("gyro");
-
-        currentGyroPos = 0;
+        encoderMotor = robot9330.bigBallPickup;
 
         telemetry.addData(">", "Starting Calibration! Please wait!");
         telemetry.update();
@@ -84,40 +83,27 @@ public class Auto9330Vuforia extends LinearOpMode {
         waitForStart();
 
         vuforia.init();
-        telemetry.addData("Waiting for 10 seconds",null);
+        telemetry.addData("Waiting for 4.593 seconds",null);
         telemetry.update();
-        sleep(10000);
+        sleep(4593);
+        resetEncoder();
+        encoderDrive(DRIVE_SPEED, -8, 5.0); // drive forward 8 inches with 5 second timeout
         telemetry.addData("Currently no-scoping center vortex",null);
         telemetry.update();
         shooter.shoot();
         telemetry.addData("Shots Fired.", "Now going to destroy cap ball");
         telemetry.update();
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");    //
-
-        encoderMotor = robot9330.bigBallPickup;
-        encoderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        encoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d",
-                encoderMotor.getCurrentPosition());
-
-        encoderDrive(DRIVE_SPEED, -36, 5.0); // drive forward 36 inches with 5 second timeout
+        resetEncoder();
+        encoderDrive(DRIVE_SPEED, -28, 5.0); // drive forward 36 inches with 5 second timeout
                                              //(destination inches must be negative; I know, it's backwards :P)
         telemetry.addData("Cap ball has been rekt.", "Now trying to find beacons");
         telemetry.update();
 
         while(opModeIsActive()) {
 
-            // current gyro settings
-            currentGyroPos = gyro.getHeading();
-            //if (currentGyroPos > 180) {
-            //    currentGyroPos -= 360;
-            //}
+            angleZ  = -gyro.getIntegratedZValue();
 
-            telemetry.addData("Current Gyro Position: ", currentGyroPos);
+            telemetry.addData("Rotation from original angle ", angleZ);
             telemetry.update();
 
             if (!firstBeaconComplete) {
@@ -133,7 +119,7 @@ public class Auto9330Vuforia extends LinearOpMode {
                     telemetry.addData("Tracking " + vuforia.wheelsTarget.getName(), vuforia.wheelsListener.isVisible());
                     foundTarget = true;
                     drivetoTarget();
-                    straighten();
+                    //straighten();
                 }
                 else if (vuforia.toolsListener.isVisible())
                 {
@@ -186,6 +172,7 @@ public class Auto9330Vuforia extends LinearOpMode {
 
                     // Send information about whether the target is visible, and where the robot is
                     if (!foundTarget) {
+                        //ds.driveForward(100, 1);
                         ds.driveDiagonalLeft(100, 1);
                         straighten();
                     } else {
@@ -247,9 +234,9 @@ public class Auto9330Vuforia extends LinearOpMode {
     }
 
     public void straighten() {
-        if (currentGyroPos < MAX_LEFT_GYRO) {
+        if (angleZ < MAX_LEFT_GYRO) {
             ds.turn(0, TURN_SPEED, 2);
-        } else if (currentGyroPos > MAX_RIGHT_GYRO) {
+        } else if (angleZ > MAX_RIGHT_GYRO) {
             ds.turn(0, TURN_SPEED, 2);
         } else {
         }
@@ -259,6 +246,18 @@ public class Auto9330Vuforia extends LinearOpMode {
     }
 
     public void driveToSecondBeacon(){
+    }
+
+    public void resetEncoder(){
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Resetting Encoders");    //
+
+        encoderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        encoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Send telemetry message to indicate successful Encoder reset
+        telemetry.addData("Path0",  "Starting at %7d",
+                encoderMotor.getCurrentPosition());
     }
 
     public void encoderDrive(double speed,

@@ -46,7 +46,7 @@ public class drive9330{
             (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
-    double currentGyroPos;
+    double angleZ;
     DcMotor encoderMotor = null;
 
     public drive9330(Hardware9330 robotmap) {
@@ -74,6 +74,23 @@ public class drive9330{
         encoderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+    }
+
+    public void driveForward(int time, double speed) {
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            robot9330.leftFrontMotor.setPower(-speed);
+            robot9330.rightFrontMotor.setPower(speed);
+            robot9330.rightRearMotor.setPower(speed);
+            robot9330.leftRearMotor.setPower(-speed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("Driving straight: time left -->" + (targetTime - currentTimeMillis()));
+            }
+            robot9330.leftFrontMotor.setPower(0);
+            robot9330.rightFrontMotor.setPower(0);
+            robot9330.rightRearMotor.setPower(0);
+            robot9330.leftRearMotor.setPower(0);
+        }
     }
 
     public void drive() {
@@ -333,13 +350,13 @@ public class drive9330{
        // }
 
         //Continue while the robot direction is further than three degrees from the target
-        while (Math.abs(currentGyroPos) - targetAngle > error) {
+        while (Math.abs(angleZ) - targetAngle > error) {
             //if gyro is positive, we will turn right
-            if (currentGyroPos > targetAngle) {
+            if (angleZ > targetAngle) {
                 turnTable(speed);
             }
             //if gyro is positive, we will turn left
-            if (currentGyroPos < targetAngle) {
+            if (angleZ < targetAngle) {
                 turnTable(-speed);
             }
 
