@@ -297,6 +297,23 @@ public class drive9330{
         robot9330.leftRearMotor.setPower(leftSpeed);
     }
 
+    public void moveLeft(float leftSpeed, float rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(-leftSpeed);
+        robot9330.rightFrontMotor.setPower(-rightSpeed);
+        robot9330.rightRearMotor.setPower(rightSpeed);
+        robot9330.leftRearMotor.setPower(leftSpeed);
+    }
+
+    public void moveRight(float leftSpeed, float rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(leftSpeed);
+        robot9330.rightFrontMotor.setPower(rightSpeed);
+        robot9330.rightRearMotor.setPower(-rightSpeed);
+        robot9330.leftRearMotor.setPower(-leftSpeed);
+    }
+
+
     public void moveDiagonalRight(float leftSpeed, float rightSpeed) {
 
         robot9330.leftFrontMotor.setPower(leftSpeed);
@@ -343,28 +360,29 @@ public class drive9330{
     }
     // keep speed low for more accurate angles.
     // for turning left, make targetAngle negative and for right, make it positive
-    public void turn(int targetAngle, double speed, int error) {
+    public void turn(int targetAngle, double speed, int error, int angleZ) {
 
-       // if (gyroInitialized) {
-       //     zAccumulated = gyro.getIntegratedZValue();  //Set variables to gyro readings
-       // }
-
+        // if (gyroInitialized) {
+        //     zAccumulated = gyro.getIntegratedZValue();  //Set variables to gyro readings
+        // }
         //Continue while the robot direction is further than three degrees from the target
-        while (Math.abs(angleZ) - targetAngle > error) {
+        if ((Math.abs(angleZ - targetAngle) > error)) {
             //if gyro is positive, we will turn right
             if (angleZ > targetAngle) {
                 turnTable(speed);
             }
             //if gyro is positive, we will turn left
-            if (angleZ < targetAngle) {
+            else if (angleZ < targetAngle) {
                 turnTable(-speed);
+
+                //Set variables to gyro readings
+                //zAccumulated = gyro.getIntegratedZValue();
+            } else {
+                turnTable(0);
             }
-
-            //Set variables to gyro readings
-            //zAccumulated = gyro.getIntegratedZValue();
+        } else {
+            turnTable(0);
         }
-
-        turnTable(0);
     }
 
     public void turnTable (double speed){

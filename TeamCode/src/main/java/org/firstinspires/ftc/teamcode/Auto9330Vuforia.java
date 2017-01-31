@@ -27,7 +27,7 @@ public class Auto9330Vuforia extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 3.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.1;
     static final double     MAX_LEFT_TARGET         = 64;
     static final double     MAX_RIGHT_TARGET        = 70;
     static final double     CENTER_POSITION         = 67;
@@ -174,7 +174,9 @@ public class Auto9330Vuforia extends LinearOpMode {
                     if (!foundTarget) {
                         //ds.driveForward(100, 1);
                         ds.driveDiagonalLeft(100, 1);
+                        telemetry.addData("about to straighten", null);
                         straighten();
+                        telemetry.addData("done straightening", null);
                     } else {
                         telemetry.addData("no targets in sight", null);
                         if (y > CLOSEST_DISTANCE) {
@@ -235,9 +237,9 @@ public class Auto9330Vuforia extends LinearOpMode {
 
     public void straighten() {
         if (angleZ < MAX_LEFT_GYRO) {
-            ds.turn(0, TURN_SPEED, 2);
+            ds.turn(0, TURN_SPEED, 2, angleZ);
         } else if (angleZ > MAX_RIGHT_GYRO) {
-            ds.turn(0, TURN_SPEED, 2);
+            ds.turn(0, TURN_SPEED, 2, angleZ);
         } else {
         }
     }

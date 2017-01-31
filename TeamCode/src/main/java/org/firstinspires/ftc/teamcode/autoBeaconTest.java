@@ -102,20 +102,20 @@ public class autoBeaconTest extends LinearOpMode {
                 ds.moveForward(0.2f, 0.2f);
             }
             ds.moveForward(0, 0);
-            ds.turn(90, .5f, 3);
+            ds.turn(90, .5f, 3, 1);
             ds.driveDistance(18, .3f);
 
 
             // move to next beacon
             ds.driveDistance(12, -0.5f);
-            ds.turn(-90, 0.5f, 3);
+            ds.turn(-90, 0.5f, 3, 1);
             ds.driveDistance(36, 0.5f);
 
             while (hwMap.ODS.getLightDetected() < 0.0189) { //value continuously checked
                 ds.moveForward(0.2f, 0.2f);
             }
             ds.moveForward(0, 0);
-            ds.turn(90, .5f, 3);
+            ds.turn(90, .5f, 3, 1);
             ds.driveDistance(12, .3f);
 
             // beacon stuff here --
@@ -130,7 +130,7 @@ public class autoBeaconTest extends LinearOpMode {
 
             // to middle pedestal
             ds.driveDistance(18, -0.5f);
-            ds.turn(90, 0.5f, 3);
+            ds.turn(90, 0.5f, 3, 1);
             ds.driveDiagonalRightDistance(48, 0.5f);
 
 
