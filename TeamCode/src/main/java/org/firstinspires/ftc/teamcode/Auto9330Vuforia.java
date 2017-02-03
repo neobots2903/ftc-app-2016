@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 
 /**
@@ -119,7 +118,7 @@ public class Auto9330Vuforia extends LinearOpMode {
                     telemetry.addData("Tracking " + vuforia.wheelsTarget.getName(), vuforia.wheelsListener.isVisible());
                     foundTarget = true;
                     drivetoTarget();
-                    //straighten();
+                    straighten();
                 }
                 else if (vuforia.toolsListener.isVisible())
                 {
@@ -195,8 +194,8 @@ public class Auto9330Vuforia extends LinearOpMode {
                 }
             } else {
                 pressBeacon();
-                driveToSecondBeacon();
-                pressBeacon();
+                //driveToSecondBeacon();
+                //pressBeacon();
                 telemetry.addData("We are successful!!", null);
             }
             telemetry.update();
@@ -209,14 +208,9 @@ public class Auto9330Vuforia extends LinearOpMode {
 
         }
     }
-    /*
-     *  Method to perfmorm a relative move, based on encoder counts.
-     *  Encoders are not reset as the move is based on the current position.
-     *  Move will stop if any of three conditions occur:
-     *  1) Move gets to the desired position
-     *  2) Move runs out of time
-     *  3) Driver stops the opmode running.
-     */
+    
+    //Below are most of the functions called in the code above
+
     public void drivetoTarget() {
         if (y > CLOSEST_DISTANCE) {
             if (MAX_LEFT_TARGET >= x) {
@@ -245,6 +239,9 @@ public class Auto9330Vuforia extends LinearOpMode {
     }
 
     public void pressBeacon() {
+        //Ready to put beacon-pressing code here.
+        //This will require color sensor, gyro, beBoop, and driving.
+        //Have fun :P
     }
 
     public void driveToSecondBeacon(){
@@ -262,6 +259,15 @@ public class Auto9330Vuforia extends LinearOpMode {
                 encoderMotor.getCurrentPosition());
     }
 
+    /*
+     *  Method to perfmorm a relative move, based on encoder counts.
+     *  Encoders are not reset as the move is based on the current position.
+     *  Move will stop if any of three conditions occur:
+     *  1) Move gets to the desired position
+     *  2) Move runs out of time
+     *  3) Driver stops the opmode running.
+     */
+    
     public void encoderDrive(double speed,
                              double leftInches,
                              double timeoutS) {
