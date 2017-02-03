@@ -288,6 +288,29 @@ public class drive9330{
 
     }
 
+    public void driveLeft(int time, float newSpeed) {
+
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            moveLeft(newSpeed, newSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveLeft(0, 0);
+        }
+    }
+    
+    public void driveRight(int time, float newSpeed) {
+
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            moveRight(newSpeed, newSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveRight(0, 0);
+        }
+    }
 
     public void moveForward(float leftSpeed, float rightSpeed){
 
