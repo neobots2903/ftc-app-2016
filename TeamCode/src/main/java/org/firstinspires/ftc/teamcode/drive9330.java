@@ -46,6 +46,7 @@ public class drive9330{
             (WHEEL_DIAMETER_INCHES * 3.14159);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
+    double angleZ;
     DcMotor encoderMotor = null;
 
     public drive9330(Hardware9330 robotmap) {
@@ -73,6 +74,23 @@ public class drive9330{
         encoderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+    }
+
+    public void driveForward(int time, double speed) {
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            robot9330.leftFrontMotor.setPower(-speed);
+            robot9330.rightFrontMotor.setPower(speed);
+            robot9330.rightRearMotor.setPower(speed);
+            robot9330.leftRearMotor.setPower(-speed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("Driving straight: time left -->" + (targetTime - currentTimeMillis()));
+            }
+            robot9330.leftFrontMotor.setPower(0);
+            robot9330.rightFrontMotor.setPower(0);
+            robot9330.rightRearMotor.setPower(0);
+            robot9330.leftRearMotor.setPower(0);
+        }
     }
 
     public void drive() {
@@ -270,6 +288,29 @@ public class drive9330{
 
     }
 
+    public void driveLeft(int time, double newSpeed) {
+
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            moveLeft(newSpeed, newSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveLeft(0, 0);
+        }
+    }
+    
+    public void driveRight(int time, double newSpeed) {
+
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            moveRight(newSpeed, newSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveRight(0, 0);
+        }
+    }
 
     public void moveForward(float leftSpeed, float rightSpeed){
 
@@ -278,6 +319,23 @@ public class drive9330{
         robot9330.rightRearMotor.setPower(-rightSpeed);
         robot9330.leftRearMotor.setPower(leftSpeed);
     }
+
+    public void moveLeft(double leftSpeed, double rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(-leftSpeed);
+        robot9330.rightFrontMotor.setPower(-rightSpeed);
+        robot9330.rightRearMotor.setPower(rightSpeed);
+        robot9330.leftRearMotor.setPower(leftSpeed);
+    }
+
+    public void moveRight(double leftSpeed, double rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(leftSpeed);
+        robot9330.rightFrontMotor.setPower(rightSpeed);
+        robot9330.rightRearMotor.setPower(-rightSpeed);
+        robot9330.leftRearMotor.setPower(-leftSpeed);
+    }
+
 
     public void moveDiagonalRight(float leftSpeed, float rightSpeed) {
 
@@ -293,33 +351,64 @@ public class drive9330{
 
     }
 
-    // keep speed low for more accurate angles.
-    // for turning left, make targetAngle negative and for right, make it positive
-    public void turn(int targetAngle, float speed, int error) {
-
-        if (gyroInitialized) {
-            zAccumulated = gyro.getIntegratedZValue();  //Set variables to gyro readings
-        }
-
-        //Continue while the robot direction is further than three degrees from the target
-        while (Math.abs(zAccumulated - target) > error) {
-            //if gyro is positive, we will turn right
-            if (zAccumulated > target) {
-                turnTable(-speed);
+    public void turnWithoutGyro(int time, double newSpeed, boolean left) {
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            if (left){
+                turnLeft(newSpeed, newSpeed);
+            } else {
+                turnRight(newSpeed, newSpeed);
             }
-            //if gyro is positive, we will turn left
-            if (zAccumulated < target) {
-                turnTable(speed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
             }
-
-            //Set variables to gyro readings
-            zAccumulated = gyro.getIntegratedZValue();
+            moveDiagonalLeft(0, 0);
         }
-
-        turnTable(0);
     }
 
-    public void turnTable (float speed){
+    public void turnLeft(double leftSpeed, double rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(leftSpeed);
+        robot9330.rightFrontMotor.setPower(rightSpeed);
+        robot9330.rightRearMotor.setPower(rightSpeed);
+        robot9330.leftRearMotor.setPower(leftSpeed);
+    }
+
+    public void turnRight(double leftSpeed, double rightSpeed){
+
+        robot9330.leftFrontMotor.setPower(-leftSpeed);
+        robot9330.rightFrontMotor.setPower(-rightSpeed);
+        robot9330.rightRearMotor.setPower(-rightSpeed);
+        robot9330.leftRearMotor.setPower(-leftSpeed);
+    }
+    // keep speed low for more accurate angles.
+    // for turning left, make targetAngle negative and for right, make it positive
+    public void turn(int targetAngle, double speed, int error, int angleZ) {
+
+        // if (gyroInitialized) {
+        //     zAccumulated = gyro.getIntegratedZValue();  //Set variables to gyro readings
+        // }
+        //Continue while the robot direction is further than three degrees from the target
+        if ((Math.abs(angleZ - targetAngle) > error)) {
+            //if gyro is positive, we will turn right
+            if (angleZ > targetAngle) {
+                turnTable(speed);
+            }
+            //if gyro is positive, we will turn left
+            else if (angleZ < targetAngle) {
+                turnTable(-speed);
+
+                //Set variables to gyro readings
+                //zAccumulated = gyro.getIntegratedZValue();
+            } else {
+                turnTable(0);
+            }
+        } else {
+            turnTable(0);
+        }
+    }
+
+    public void turnTable (double speed){
 
         robot9330.leftFrontMotor.setPower(speed);
         robot9330.rightFrontMotor.setPower(speed);

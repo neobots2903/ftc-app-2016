@@ -17,6 +17,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     drive9330 ds = null;
     Brake9330 brake = null;
+    Shoot9330 shooter ;
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -31,6 +32,7 @@ public class AutoWithEncoder9330 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         robot9330.init(hardwareMap);
+        shooter = new Shoot9330(robot9330);
 
         // instantiate and initialize drive subsystem
         ds = new drive9330(robot9330);
@@ -60,8 +62,9 @@ public class AutoWithEncoder9330 extends LinearOpMode {
 
         waitOneFullHardwareCycle();
         sleep(10000);
-
-        encoderDrive(DRIVE_SPEED, 62, 5.0); // drive forward 24 inches with 5 second timeout
+        shooter.shoot();
+        encoderDrive(DRIVE_SPEED, -36, 5.0); // drive forward 36 inches with 5 second timeout
+                                             //(destination inches must be negative; I know, it's backwards :P)
 
 
         telemetry.addData("Path", "Complete");
@@ -94,16 +97,16 @@ public class AutoWithEncoder9330 extends LinearOpMode {
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot9330.leftFrontMotor.setPower(-speed);
-            robot9330.rightFrontMotor.setPower(speed-.05);
-            robot9330.rightRearMotor.setPower(speed-.05);
-            robot9330.leftRearMotor.setPower(-speed);
+            robot9330.leftFrontMotor.setPower(speed);
+            robot9330.rightFrontMotor.setPower(-speed);
+            robot9330.rightRearMotor.setPower(-speed);
+            robot9330.leftRearMotor.setPower(speed);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     encoderMotor.isBusy() &&
-                    encoderMotor.getCurrentPosition() < newLeftTarget) {
+                    encoderMotor.getCurrentPosition() > newLeftTarget) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newLeftTarget);

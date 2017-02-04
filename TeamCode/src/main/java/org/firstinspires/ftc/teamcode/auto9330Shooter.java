@@ -32,8 +32,8 @@ public class auto9330Shooter extends LinearOpMode {
         sleep(10000);
         ds.driveDiagonalLeft(1000, 1);
 
-        ds.turn(90, .5f, 3);
-        ds.turn(-180, .5f, 3);
+        ds.turn(90, .5f, 3, 1);
+        ds.turn(-180, .5f, 3, 1);
 
         shooter.shoot();
 

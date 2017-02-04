@@ -47,7 +47,7 @@ public class Auto9330 extends LinearOpMode {
         ds.driveDistance(24, 0.8f);
         telemetry.addLine("turning");
         telemetry.update();
-        ds.turn(90, 0.8f, 3);
+        ds.turn(90, 0.8f, 3, 1);
         //ds.driveDistance(12, 0.8f);
         //ds.driveDiagonalLeftDistance(12, 0.8f);
 
