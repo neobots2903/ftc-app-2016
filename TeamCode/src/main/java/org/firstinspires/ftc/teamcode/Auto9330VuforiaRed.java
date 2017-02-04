@@ -5,14 +5,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 
 /**
  * Created by NeoBOTS on 11/4/2016.
  */
 
-@Autonomous(name= "Auto9330Vuforia", group ="Opmode")
-public class Auto9330Vuforia extends LinearOpMode {
+@Autonomous(name= "Auto9330VuforiaRed", group ="Opmode")
+public class Auto9330VuforiaRed extends LinearOpMode {
 
     Hardware9330 robot9330 = new Hardware9330();
     private ElapsedTime runtime = new ElapsedTime();
@@ -32,15 +33,15 @@ public class Auto9330Vuforia extends LinearOpMode {
     static final double     MAX_RIGHT_TARGET        = 70;
     static final double     CENTER_POSITION         = 67;
     static final double     CLOSEST_DISTANCE        = 5;
-    static final int        TARGET_ANGLE            = 90;
+    static final int        TARGET_ANGLE            = -90;
     static final int     MAX_ALLOWED_ERROR          = 1;
     static final double     MAX_LEFT_GYRO           = TARGET_ANGLE - MAX_ALLOWED_ERROR;
     static final double     MAX_RIGHT_GYRO          = TARGET_ANGLE + MAX_ALLOWED_ERROR;
 
     DcMotor encoderMotor = null;
     OpenGLMatrix latestLocation;
-    double x;
-    double y;
+    double x = 67;
+    double y = 100;
     int angleZ;
     boolean gyroInitialized = false;
     boolean foundTarget = false;
@@ -90,14 +91,16 @@ public class Auto9330Vuforia extends LinearOpMode {
         telemetry.update();
         sleep(4593);
         resetEncoder();
-        encoderDrive(DRIVE_SPEED, -8, 5.0); // drive forward 8 inches with 5 second timeout
+        encoderDrive(DRIVE_SPEED, -10, 2.0); // drive forward 8 inches with 5 second timeout
         telemetry.addData("Currently no-scoping center vortex",null);
         telemetry.update();
+        shooter.shoot();
+        sleep(500);
         shooter.shoot();
         telemetry.addData("Shots Fired.", "Now going to destroy cap ball");
         telemetry.update();
         resetEncoder();
-        encoderDrive(DRIVE_SPEED, -28, 5.0); // drive forward 36 inches with 5 second timeout
+        encoderDrive(DRIVE_SPEED, -25, 5.0); // drive forward 25 inches with 5 second timeout
                                              //(destination inches must be negative; I know, it's backwards :P)
         telemetry.addData("Cap ball has been rekt.", "Now trying to find beacons");
         telemetry.update();
@@ -199,12 +202,16 @@ public class Auto9330Vuforia extends LinearOpMode {
                     }
                 }
             } else {
-                bboop.swivelToBlue();
-                resetEncoder();
-                encoderDrive(DRIVE_SPEED, -4, 2); // drive forward 8 inches with 5 second timeout
-                //driveToSecondBeacon();
-                //pressBeacon();
-                telemetry.addData("We are successful!!", null);
+                if (!missionComplete) {
+                    bboop.swivelToRed();
+                    sleep(100);
+                    resetEncoder();
+                    encoderDrive(DRIVE_SPEED, -4, 2); // drive forward 8 inches with 5 second timeout
+                    //driveToSecondBeacon();
+                    //pressBeacon();
+                    telemetry.addData("We are successful!!", null);
+                    missionComplete = true;
+                }
             }
             telemetry.update();
             telemetry.addData( "X:"+ vuforia.convertInToMM(vuforia.getXLocation(vuforia.lastKnownLocation)) +"  Y:" +
@@ -232,7 +239,7 @@ public class Auto9330Vuforia extends LinearOpMode {
                 ds.drive(0.4f);
             }
         } else {
-            firstBeaconComplete = true;
+            //firstBeaconComplete = true;
         }
     }
 

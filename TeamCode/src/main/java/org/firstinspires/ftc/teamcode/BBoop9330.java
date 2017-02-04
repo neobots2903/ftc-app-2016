@@ -15,7 +15,7 @@ public class BBoop9330 {
         hwMap = robotMap;
         hwMap.beBoop.setPosition(RIGHT_POS);
         csensor = hwMap.BBSensor;
-        csensor.enableLed(true);
+        csensor.enableLed(false);
     }
 
     public void swivelRedLeft() {
