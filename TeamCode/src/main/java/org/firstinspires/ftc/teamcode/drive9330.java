@@ -288,7 +288,7 @@ public class drive9330{
 
     }
 
-    public void driveLeft(int time, float newSpeed) {
+    public void driveLeft(int time, double newSpeed) {
 
         if(time > 0){
             targetTime = currentTimeMillis() + time;
@@ -300,7 +300,7 @@ public class drive9330{
         }
     }
     
-    public void driveRight(int time, float newSpeed) {
+    public void driveRight(int time, double newSpeed) {
 
         if(time > 0){
             targetTime = currentTimeMillis() + time;
@@ -320,7 +320,7 @@ public class drive9330{
         robot9330.leftRearMotor.setPower(leftSpeed);
     }
 
-    public void moveLeft(float leftSpeed, float rightSpeed){
+    public void moveLeft(double leftSpeed, double rightSpeed){
 
         robot9330.leftFrontMotor.setPower(-leftSpeed);
         robot9330.rightFrontMotor.setPower(-rightSpeed);
@@ -328,7 +328,7 @@ public class drive9330{
         robot9330.leftRearMotor.setPower(leftSpeed);
     }
 
-    public void moveRight(float leftSpeed, float rightSpeed){
+    public void moveRight(double leftSpeed, double rightSpeed){
 
         robot9330.leftFrontMotor.setPower(leftSpeed);
         robot9330.rightFrontMotor.setPower(rightSpeed);

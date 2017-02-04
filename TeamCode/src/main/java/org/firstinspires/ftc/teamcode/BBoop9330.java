@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 
 public class BBoop9330 {
-    public Hardware9330 hwMap = null;
+    private Hardware9330 hwMap = null;
     static final double LEFT_POS = 1.0;
     static final double RIGHT_POS = 0.0;
     ColorSensor csensor;
@@ -14,7 +14,7 @@ public class BBoop9330 {
     public BBoop9330(Hardware9330 robotMap) {
         hwMap = robotMap;
         hwMap.beBoop.setPosition(RIGHT_POS);
-        csensor = hwMap.lineCSensor;
+        csensor = hwMap.BBSensor;
         csensor.enableLed(true);
     }
 
@@ -32,6 +32,24 @@ public class BBoop9330 {
             hwMap.beBoop.setPosition(RIGHT_POS);
         }
         if (csensor.blue() > 200) {
+            hwMap.beBoop.setPosition(LEFT_POS);
+        }
+    }
+
+    public void swivelToRed() {
+        if (csensor.red() < csensor.blue()) {
+            hwMap.beBoop.setPosition(RIGHT_POS);
+        }
+        else {
+            hwMap.beBoop.setPosition(LEFT_POS);
+        }
+    }
+
+    public void swivelToBlue() {
+        if (csensor.red() > csensor.blue()) {
+            hwMap.beBoop.setPosition(RIGHT_POS);
+        }
+        else {
             hwMap.beBoop.setPosition(LEFT_POS);
         }
     }

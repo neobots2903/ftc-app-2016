@@ -17,7 +17,8 @@ public class Auto9330Vuforia extends LinearOpMode {
     Hardware9330 robot9330 = new Hardware9330();
     private ElapsedTime runtime = new ElapsedTime();
     drive9330 ds = null;
-    Shoot9330 shooter ;
+    Shoot9330 shooter;
+    BBoop9330 bboop;
     Vuforia9330 vuforia = new Vuforia9330();
     ModernRoboticsI2cGyro gyro;
 
@@ -30,9 +31,11 @@ public class Auto9330Vuforia extends LinearOpMode {
     static final double     MAX_LEFT_TARGET         = 64;
     static final double     MAX_RIGHT_TARGET        = 70;
     static final double     CENTER_POSITION         = 67;
-    static final double     CLOSEST_DISTANCE        = 10;
-    static final double     MAX_LEFT_GYRO           = -3;
-    static final double     MAX_RIGHT_GYRO          = 3;
+    static final double     CLOSEST_DISTANCE        = 5;
+    static final int        TARGET_ANGLE            = 90;
+    static final int     MAX_ALLOWED_ERROR          = 1;
+    static final double     MAX_LEFT_GYRO           = TARGET_ANGLE - MAX_ALLOWED_ERROR;
+    static final double     MAX_RIGHT_GYRO          = TARGET_ANGLE + MAX_ALLOWED_ERROR;
 
     DcMotor encoderMotor = null;
     OpenGLMatrix latestLocation;
@@ -52,6 +55,7 @@ public class Auto9330Vuforia extends LinearOpMode {
 
         robot9330.init(hardwareMap);
         shooter = new Shoot9330(robot9330);
+        bboop = new BBoop9330(robot9330);
         vuforia.setupVuforia();
         gyro = (ModernRoboticsI2cGyro)hardwareMap.get("gyro");
         encoderMotor = robot9330.bigBallPickup;
@@ -97,6 +101,7 @@ public class Auto9330Vuforia extends LinearOpMode {
                                              //(destination inches must be negative; I know, it's backwards :P)
         telemetry.addData("Cap ball has been rekt.", "Now trying to find beacons");
         telemetry.update();
+        turnNinety();
 
         while(opModeIsActive()) {
 
@@ -179,21 +184,24 @@ public class Auto9330Vuforia extends LinearOpMode {
                     } else {
                         telemetry.addData("no targets in sight", null);
                         if (y > CLOSEST_DISTANCE) {
-                            if (CENTER_POSITION < x) {
-                                telemetry.addData("Haven't met goal, can't find, turning right", null);
-                                ds.turnWithoutGyro(1, 0.2, false);
+                            if (CENTER_POSITION > x) {
+                                telemetry.addData("Haven't met goal, can't find, driving right", null);
+                                ds.driveRight(2, 0.2);
                             } else {
-                                telemetry.addData("Haven't met goal, can't find, turning left", null);
-                                ds.turnWithoutGyro(1, 0.2, true);
+                                telemetry.addData("Haven't met goal, can't find, driving left", null);
+                                ds.driveLeft(2, 0.2);
                             }
                         } else {
                             telemetry.addData("Can't find target, met distance goal", null);
                             ds.drive(0f);
+                            firstBeaconComplete = true;
                         }
                     }
                 }
             } else {
-                pressBeacon();
+                bboop.swivelToBlue();
+                resetEncoder();
+                encoderDrive(DRIVE_SPEED, -4, 2); // drive forward 8 inches with 5 second timeout
                 //driveToSecondBeacon();
                 //pressBeacon();
                 telemetry.addData("We are successful!!", null);
@@ -224,17 +232,23 @@ public class Auto9330Vuforia extends LinearOpMode {
                 ds.drive(0.4f);
             }
         } else {
-            //firstBeaconComplete = true;
-            telemetry.addData("The robot is trying to stop", null);
+            firstBeaconComplete = true;
         }
     }
 
     public void straighten() {
         if (angleZ < MAX_LEFT_GYRO) {
-            ds.turn(0, TURN_SPEED, 2, angleZ);
+            ds.turn(TARGET_ANGLE, TURN_SPEED, MAX_ALLOWED_ERROR, angleZ);
         } else if (angleZ > MAX_RIGHT_GYRO) {
-            ds.turn(0, TURN_SPEED, 2, angleZ);
+            ds.turn(TARGET_ANGLE, TURN_SPEED, MAX_ALLOWED_ERROR, angleZ);
         } else {
+        }
+    }
+
+    public void turnNinety() {
+        while (angleZ > MAX_RIGHT_GYRO || angleZ < MAX_LEFT_GYRO) {
+            angleZ  = -gyro.getIntegratedZValue();
+            ds.turn(TARGET_ANGLE, TURN_SPEED, MAX_ALLOWED_ERROR, angleZ);
         }
     }
 
