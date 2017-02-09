@@ -33,7 +33,7 @@ public class Auto9330VuforiaBlue extends LinearOpMode {
     static final double     CENTER_POSITION         = 67;
     static final double     CLOSEST_DISTANCE        = 5;
     static final int        TARGET_ANGLE            = 90;
-    static final int     MAX_ALLOWED_ERROR          = 1;
+    static final int     MAX_ALLOWED_ERROR          = 2;
     static final double     MAX_LEFT_GYRO           = TARGET_ANGLE - MAX_ALLOWED_ERROR;
     static final double     MAX_RIGHT_GYRO          = TARGET_ANGLE + MAX_ALLOWED_ERROR;
 
@@ -90,16 +90,20 @@ public class Auto9330VuforiaBlue extends LinearOpMode {
         telemetry.update();
         sleep(4593);
         resetEncoder();
-        encoderDrive(DRIVE_SPEED, -10, 2.0); // drive forward 8 inches with 5 second timeout
+        encoderDrive(DRIVE_SPEED, -13, 2.0); // drive forward 8 inches with 5 second timeout
         telemetry.addData("Currently no-scoping center vortex",null);
         telemetry.update();
         shooter.shoot();
         sleep(500);
-        shooter.shoot();
+        shooter.lowerShoot();
+        ds.driveUpwards(200, 1);
+        ds.driveUpwards(200, -1);
+        sleep(1000);
+        shooter.shootLoweredShoot();
         telemetry.addData("Shots Fired.", "Now going to destroy cap ball");
         telemetry.update();
         resetEncoder();
-        encoderDrive(DRIVE_SPEED, -25, 5.0); // drive forward 25 inches with 5 second timeout
+        encoderDrive(DRIVE_SPEED, -22, 5.0); // drive forward 25 inches with 5 second timeout
                                              //(destination inches must be negative; I know, it's backwards :P)
         telemetry.addData("Cap ball has been rekt.", "Now trying to find beacons");
         telemetry.update();
@@ -188,10 +192,10 @@ public class Auto9330VuforiaBlue extends LinearOpMode {
                         if (y > CLOSEST_DISTANCE) {
                             if (CENTER_POSITION > x) {
                                 telemetry.addData("Haven't met goal, can't find, driving right", null);
-                                ds.driveRight(2, 0.2);
+                                ds.driveRight(100, 0.3);
                             } else {
                                 telemetry.addData("Haven't met goal, can't find, driving left", null);
-                                ds.driveLeft(2, 0.2);
+                                ds.driveLeft(100, 0.3);
                             }
                         } else {
                             telemetry.addData("Can't find target, met distance goal", null);
@@ -205,7 +209,7 @@ public class Auto9330VuforiaBlue extends LinearOpMode {
                     bboop.swivelToBlue();
                     sleep(100);
                     resetEncoder();
-                    encoderDrive(DRIVE_SPEED, -4, 2); // drive forward 8 inches with 5 second timeout
+                    encoderDrive(DRIVE_SPEED, -4, 2);
                     //driveToSecondBeacon();
                     //pressBeacon();
                     telemetry.addData("We are successful!!", null);
@@ -235,7 +239,7 @@ public class Auto9330VuforiaBlue extends LinearOpMode {
                 ds.driveDiagonalRight(100,1);
             } else {
                 telemetry.addData("have not yet met goal, continue straight", null);
-                ds.drive(0.4f);
+                ds.drive(0.5);
             }
         } else {
             //firstBeaconComplete = true;

@@ -46,6 +46,40 @@ public class Shoot9330 {
 
     }
 
+    public void lowerShoot() throws InterruptedException {
+        //Wait for start
+        // waitForStart();
+        if (hwMap != null) {
+            //Set the power to max
+            hwMap.shotMotor.setPower(1);
+            //Wait 1 second
+            //Set the power to reverse, max
+//            hwMap.shotMotor.setPower(-1);
+            //Wait 1 second
+            sleep(850);
+            //Stop the motor
+            hwMap.shotMotor.setPower(0);
+        }
+
+    }
+
+    public void shootLoweredShoot() throws InterruptedException {
+        //Wait for start
+        // waitForStart();
+        if (hwMap != null) {
+            //Set the power to max
+            hwMap.shotMotor.setPower(1);
+            //Wait 1 second
+            sleep(1150);
+            //Set the power to reverse, max
+//            hwMap.shotMotor.setPower(-1);
+            //Wait 1 second
+            //Stop the motor
+            hwMap.shotMotor.setPower(0);
+        }
+
+    }
+
     public void shootEncoderReset() {
         hwMap.shotMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }

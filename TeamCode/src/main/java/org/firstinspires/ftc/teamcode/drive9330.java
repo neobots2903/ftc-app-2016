@@ -103,7 +103,7 @@ public class drive9330{
     }
 
     // set the drive train to a specific speed
-    public void drive(float speed)
+    public void drive(double speed)
     {
         moveForward(speed, speed);
     }
@@ -312,7 +312,19 @@ public class drive9330{
         }
     }
 
-    public void moveForward(float leftSpeed, float rightSpeed){
+    public void driveUpwards(int time, double newSpeed) {
+
+        if(time > 0){
+            targetTime = currentTimeMillis() + time;
+            moveForward(newSpeed, newSpeed);
+            while(currentTimeMillis() <= targetTime){
+                System.out.println   ("autodrive %d" + (targetTime - currentTimeMillis()));
+            }
+            moveRight(0, 0);
+        }
+    }
+
+    public void moveForward(double leftSpeed, double rightSpeed){
 
         robot9330.leftFrontMotor.setPower(leftSpeed);
         robot9330.rightFrontMotor.setPower(-rightSpeed);
