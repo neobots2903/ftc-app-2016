@@ -1,3 +1,4 @@
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
